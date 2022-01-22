@@ -1,4 +1,4 @@
-package com.masliaiev.filmspace.domain
+package com.masliaiev.filmspace.domain.entity
 
 data class Trailer(
     val key: String,
