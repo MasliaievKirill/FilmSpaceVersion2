@@ -1,4 +1,7 @@
 package com.masliaiev.filmspace.presentation
 
-class MainFragment {
+import androidx.fragment.app.Fragment
+
+class MainFragment: Fragment() {
+
 }

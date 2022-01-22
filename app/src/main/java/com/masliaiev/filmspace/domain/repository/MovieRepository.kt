@@ -2,6 +2,8 @@ package com.masliaiev.filmspace.domain.repository
 
 import androidx.lifecycle.LiveData
 import com.masliaiev.filmspace.domain.entity.Movie
+import com.masliaiev.filmspace.domain.entity.Review
+import com.masliaiev.filmspace.domain.entity.Trailer
 
 interface MovieRepository {
 
@@ -21,14 +23,14 @@ interface MovieRepository {
 
     fun addSearchedMovie(movie: Movie)
 
-    fun deleteFavouriteMovie(movie: Movie)
+    fun deleteFavouriteMovie(id: Int)
 
-    fun loadMovies()
+    suspend fun loadMovies(popularity: Boolean, lang: String, page: Int)
 
-    fun loadTrailers()
+    suspend fun loadTrailers(movieId: Int): List<Trailer>?
 
-    fun loadReviews()
+    suspend fun loadReviews(movieId: Int): List<Review>?
 
-    fun searchMovies()
+    suspend fun searchMovies(lang: String, query: String, page: Int): List<Movie>?
 
 }

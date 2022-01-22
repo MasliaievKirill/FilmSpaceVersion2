@@ -1,6 +1,11 @@
-package com.masliaiev.filmspace.domain.entity
+package com.masliaiev.filmspace.data.database
 
-data class Movie(
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "favourite_movies")
+data class FavouriteMovieDbModel (
+    @PrimaryKey
     val id: Int?,
     val voteCount: Int?,
     val title: String?,
