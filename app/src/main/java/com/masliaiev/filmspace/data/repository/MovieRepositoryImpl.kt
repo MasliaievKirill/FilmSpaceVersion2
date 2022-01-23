@@ -61,15 +61,15 @@ class MovieRepositoryImpl(private val application: Application) : MovieRepositor
         }
     }
 
-    override fun addFavouriteMovie(movie: Movie) {
+    override suspend fun addFavouriteMovie(movie: Movie) {
         movieDao.addFavouriteMovie(mapper.mapMovieEntityToFavouriteMovieDbModel(movie))
     }
 
-    override fun addSearchedMovie(movie: Movie) {
+    override suspend fun addSearchedMovie(movie: Movie) {
         movieDao.addSearchedMovie(mapper.mapMovieEntityToSearchedMovieDbModel(movie))
     }
 
-    override fun deleteFavouriteMovie(id: Int) {
+    override suspend fun deleteFavouriteMovie(id: Int) {
         movieDao.deleteFavouriteMovie(id)
     }
 

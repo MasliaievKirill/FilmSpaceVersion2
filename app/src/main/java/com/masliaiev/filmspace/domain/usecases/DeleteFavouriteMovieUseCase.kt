@@ -5,7 +5,7 @@ import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.domain.repository.MovieRepository
 
 class DeleteFavouriteMovieUseCase (private val repository: MovieRepository) {
-    operator fun invoke (id: Int){
+    suspend fun deleteFavouriteMovie (id: Int){
         repository.deleteFavouriteMovie(id)
     }
 }

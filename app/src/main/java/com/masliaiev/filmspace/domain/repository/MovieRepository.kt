@@ -19,11 +19,11 @@ interface MovieRepository {
 
     fun getSearchedMovie(id: Int): LiveData<Movie>
 
-    fun addFavouriteMovie(movie: Movie)
+    suspend fun addFavouriteMovie(movie: Movie)
 
-    fun addSearchedMovie(movie: Movie)
+    suspend fun addSearchedMovie(movie: Movie)
 
-    fun deleteFavouriteMovie(id: Int)
+    suspend fun deleteFavouriteMovie(id: Int)
 
     suspend fun loadMovies(popularity: Boolean, lang: String, page: Int)
 

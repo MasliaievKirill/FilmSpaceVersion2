@@ -5,7 +5,7 @@ import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.domain.repository.MovieRepository
 
 class AddFavouriteMovieUseCase (private val repository: MovieRepository) {
-    operator fun invoke (movie: Movie){
+    suspend fun addFavouriteMovie (movie: Movie){
         repository.addFavouriteMovie(movie)
     }
 }

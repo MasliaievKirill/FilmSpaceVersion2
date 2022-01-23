@@ -5,7 +5,7 @@ import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.domain.repository.MovieRepository
 
 class AddSearchedMovieUseCase (private val repository: MovieRepository) {
-    operator fun invoke (movie: Movie){
+    suspend fun addSearchedMovie (movie: Movie){
         repository.addSearchedMovie(movie)
     }
 }

@@ -31,12 +31,12 @@ interface MovieDao {
     fun getSearchedMovie(id: Int): LiveData<SearchedMovieDbModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addFavouriteMovie(movie: FavouriteMovieDbModel)
+    suspend fun addFavouriteMovie(movie: FavouriteMovieDbModel)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addSearchedMovie(movie: SearchedMovieDbModel)
+    suspend fun addSearchedMovie(movie: SearchedMovieDbModel)
 
     @Query("DELETE FROM favourite_movies WHERE id=:id")
-    fun deleteFavouriteMovie(id: Int)
+    suspend fun deleteFavouriteMovie(id: Int)
 
 }
