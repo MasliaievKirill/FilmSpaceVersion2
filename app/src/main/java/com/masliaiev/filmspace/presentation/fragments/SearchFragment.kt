@@ -1,4 +1,4 @@
-package com.masliaiev.filmspace.presentation
+package com.masliaiev.filmspace.presentation.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.masliaiev.filmspace.R
 
 
-class FavouriteFragment : Fragment() {
+class SearchFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +24,8 @@ class FavouriteFragment : Fragment() {
     }
 
     companion object{
-        fun newInstanceFavourite(): FavouriteFragment {
-            return FavouriteFragment()
+        fun newInstanceSearch(): SearchFragment {
+            return SearchFragment()
         }
     }
 }

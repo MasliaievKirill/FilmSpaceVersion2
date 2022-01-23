@@ -5,8 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [MovieDbModel::class, FavouriteMovieDbModel::class, SearchedMovieDbModel::class], version = 1, exportSchema = false)
-abstract class AppDatabase: RoomDatabase() {
+@Database(
+    entities = [MovieDbModel::class, FavouriteMovieDbModel::class, SearchedMovieDbModel::class],
+    version = 11,
+    exportSchema = false
+)
+abstract class AppDatabase : RoomDatabase() {
 
     abstract fun movieDao(): MovieDao
 
@@ -25,9 +29,10 @@ abstract class AppDatabase: RoomDatabase() {
                 }
                 val db = Room.databaseBuilder(
                     application,
-                AppDatabase::class.java,
-                DB_NAME
-                ).build()
+                    AppDatabase::class.java,
+                    DB_NAME
+                ).fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = db
                 return db
             }

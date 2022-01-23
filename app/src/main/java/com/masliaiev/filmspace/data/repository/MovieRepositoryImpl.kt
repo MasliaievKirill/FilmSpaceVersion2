@@ -73,17 +73,25 @@ class MovieRepositoryImpl(private val application: Application) : MovieRepositor
         movieDao.deleteFavouriteMovie(id)
     }
 
-    override suspend fun loadMovies(popularity: Boolean, lang: String, page: Int) {
-        val movies = if (popularity) {
-            apiService.getPopularityMovies(lang = lang, page = page)
-        } else {
-            apiService.getTopRatedMovies(lang = lang, page = page)
+    override suspend fun loadMovies(popularity: Boolean, lang: String, page: Int): Boolean {
+        try {
+            val movies = if (popularity) {
+                apiService.getPopularityMovies(lang = lang, page = page)
+            } else {
+                apiService.getTopRatedMovies(lang = lang, page = page)
+            }
+            if (page == 1) {
+                movieDao.deleteAllMovies()
+            }
+            movies.results?.let {
+                movieDao.insertMovieList(it.map {
+                    mapper.mapMovieDtoToMovieDbModel(it)
+                })
+            }
+        } catch (e: Exception) {
+            return false
         }
-        movies.results?.let {
-            movieDao.insertMovieList(it.map {
-                mapper.mapMovieDtoToMovieDbModel(it)
-            })
-        }
+        return true
     }
 
     override suspend fun loadTrailers(movieId: Int): List<Trailer>? {
@@ -113,4 +121,5 @@ class MovieRepositoryImpl(private val application: Application) : MovieRepositor
             }
         return searchedMovies
     }
+
 }

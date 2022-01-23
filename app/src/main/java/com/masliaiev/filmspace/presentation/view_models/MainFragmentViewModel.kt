@@ -1,7 +1,9 @@
-package com.masliaiev.filmspace.presentation
+package com.masliaiev.filmspace.presentation.view_models
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.masliaiev.filmspace.data.repository.MovieRepositoryImpl
 import com.masliaiev.filmspace.domain.usecases.GetMovieListUseCase
@@ -16,11 +18,15 @@ class MainFragmentViewModel(application: Application) : AndroidViewModel(applica
     private val loadMoviesUseCase = LoadMoviesUseCase(repository)
     private val getMoviesListUseCase = GetMovieListUseCase(repository)
 
+    private val _errorLoadMovies = MutableLiveData<Boolean>()
+    val errorLoadMovies: LiveData<Boolean>
+        get() = _errorLoadMovies
+
     val getMovies = getMoviesListUseCase.invoke()
 
     fun loadMovies(popularity: Boolean, page: Int) {
         viewModelScope.launch {
-            loadMoviesUseCase.loadMovies(
+            _errorLoadMovies.value = loadMoviesUseCase.loadMovies(
                 popularity = popularity,
                 lang = getCurrentLanguage(),
                 page = page

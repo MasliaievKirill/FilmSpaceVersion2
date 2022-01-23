@@ -15,7 +15,7 @@ data class MovieDto(
     val genreIds: List<Int>?,
     @SerializedName("id")
     @Expose
-    val id: Int?,
+    val id: Int,
     @SerializedName("original_language")
     @Expose
     val originalLanguage: String?,
@@ -42,7 +42,7 @@ data class MovieDto(
     val video: Boolean?,
     @SerializedName("vote_average")
     @Expose
-    val voteAverage: Int?,
+    val voteAverage: Double?,
     @SerializedName("vote_count")
     @Expose
     val voteCount: Int?

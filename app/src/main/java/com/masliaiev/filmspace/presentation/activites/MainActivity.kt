@@ -1,4 +1,4 @@
-package com.masliaiev.filmspace.presentation
+package com.masliaiev.filmspace.presentation.activites
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +8,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.masliaiev.filmspace.R
 import com.masliaiev.filmspace.databinding.ActivityMainBinding
-import java.lang.RuntimeException
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,19 +17,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.bottomNavigation.setOnItemSelectedListener {
-            val fragment = when(it.itemId){
-                R.id.main_fragment -> MainFragment.newInstanceMain()
-                R.id.favourite_fragment -> FavouriteFragment.newInstanceFavourite()
-                R.id.search_fragment -> SearchFragment.newInstanceSearch()
-                else -> throw RuntimeException("Unknown fragment id $it.itemId")
-            }
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit()
-            true
-        }
-
-
+        val navController = findNavController(R.id.nav_host_fragment)
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.main_fragment,
+                R.id.favourite_fragment,
+                R.id.search_fragment
+            )
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        binding.bottomNavigation.setupWithNavController(navController)
     }
+
 }

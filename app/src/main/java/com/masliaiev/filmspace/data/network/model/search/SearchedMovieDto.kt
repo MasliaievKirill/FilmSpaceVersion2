@@ -18,7 +18,7 @@ data class SearchedMovieDto(
 
     @SerializedName("id")
     @Expose
-    val id: Int?,
+    val id: Int,
 
     @SerializedName("original_language")
     @Expose

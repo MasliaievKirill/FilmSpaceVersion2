@@ -23,7 +23,8 @@ class MovieMapper {
             posterPath = BASE_POSTER_URL + POSTER_SIZE + movieDbModel.posterPath,
             backdropPath = BASE_POSTER_URL + POSTER_SIZE + movieDbModel.backdropPath,
             voteAverage = movieDbModel.voteAverage,
-            releaseDate = movieDbModel.releaseDate
+            releaseDate = movieDbModel.releaseDate,
+            uniqueId = movieDbModel.uniqueId
         )
     }
 
@@ -37,7 +38,8 @@ class MovieMapper {
             posterPath = favouriteMovieDbModel.posterPath,
             backdropPath = favouriteMovieDbModel.backdropPath,
             voteAverage = favouriteMovieDbModel.voteAverage,
-            releaseDate = favouriteMovieDbModel.releaseDate
+            releaseDate = favouriteMovieDbModel.releaseDate,
+            uniqueId = favouriteMovieDbModel.uniqueId
         )
     }
 
@@ -50,8 +52,9 @@ class MovieMapper {
             overview = searchedMovieDbModel.overview,
             posterPath = BASE_POSTER_URL + POSTER_SIZE + searchedMovieDbModel.posterPath,
             backdropPath = BASE_POSTER_URL + POSTER_SIZE + searchedMovieDbModel.backdropPath,
-            voteAverage = searchedMovieDbModel.voteAverage?.toInt(),
-            releaseDate = searchedMovieDbModel.releaseDate
+            voteAverage = searchedMovieDbModel.voteAverage,
+            releaseDate = searchedMovieDbModel.releaseDate,
+            uniqueId = searchedMovieDbModel.uniqueId
         )
     }
 
@@ -65,7 +68,8 @@ class MovieMapper {
             posterPath = movieDto.posterPath,
             backdropPath = movieDto.backdropPath,
             voteAverage = movieDto.voteAverage,
-            releaseDate = movieDto.releaseDate
+            releaseDate = movieDto.releaseDate,
+            uniqueId = UNDEFINED_ID
         )
     }
 
@@ -78,8 +82,10 @@ class MovieMapper {
             overview = searchedMoviesDto.overview,
             posterPath = BASE_POSTER_URL + POSTER_SIZE + searchedMoviesDto.posterPath,
             backdropPath = BASE_POSTER_URL + POSTER_SIZE + searchedMoviesDto.backdropPath,
-            voteAverage = searchedMoviesDto.voteAverage?.toInt(),
-            releaseDate = searchedMoviesDto.releaseDate
+            voteAverage = searchedMoviesDto.voteAverage,
+            releaseDate = searchedMoviesDto.releaseDate,
+            uniqueId = UNDEFINED_ID
+
         )
     }
 
@@ -93,7 +99,8 @@ class MovieMapper {
             posterPath = movie.posterPath,
             backdropPath = movie.backdropPath,
             voteAverage = movie.voteAverage,
-            releaseDate = movie.releaseDate
+            releaseDate = movie.releaseDate,
+            uniqueId = UNDEFINED_ID
         )
     }
 
@@ -107,7 +114,8 @@ class MovieMapper {
             posterPath = movie.posterPath,
             backdropPath = movie.backdropPath,
             voteAverage = movie.voteAverage?.toDouble(),
-            releaseDate = movie.releaseDate
+            releaseDate = movie.releaseDate,
+            uniqueId = UNDEFINED_ID
         )
     }
 
@@ -130,6 +138,7 @@ class MovieMapper {
         private const val BASE_POSTER_URL = "https://image.tmdb.org/t/p/"
         private const val POSTER_SIZE = "w780"
         private const val BASE_YOUTUBE_URL = "https://www.youtube.com/watch?v="
+        private const val UNDEFINED_ID = 0
     }
 
 

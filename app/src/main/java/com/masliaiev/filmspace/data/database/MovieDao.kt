@@ -15,6 +15,9 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovieList(list: List<MovieDbModel>)
 
+    @Query("DELETE FROM movies")
+    suspend fun deleteAllMovies()
+
     @Query("SELECT * FROM favourite_movies")
     fun getFavouriteMovieList(): LiveData<List<FavouriteMovieDbModel>>
 

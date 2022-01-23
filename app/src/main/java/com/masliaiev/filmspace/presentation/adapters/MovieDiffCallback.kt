@@ -6,7 +6,7 @@ import com.masliaiev.filmspace.domain.entity.Movie
 class MovieDiffCallback: DiffUtil.ItemCallback<Movie>() {
 
     override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.uniqueId == newItem.uniqueId
     }
 
     override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
