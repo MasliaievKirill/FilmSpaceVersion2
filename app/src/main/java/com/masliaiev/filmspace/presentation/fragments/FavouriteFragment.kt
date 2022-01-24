@@ -42,14 +42,14 @@ class FavouriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.rvFavouriteMovies.adapter = adapter
         binding.rvFavouriteMovies.layoutManager = GridLayoutManager(requireContext(), 2)
-        viewModel.getFavouritesMovies.observe(viewLifecycleOwner){
-            if (it.isEmpty()){
-                binding.tvFavouriteWarning.visibility = View.VISIBLE
-            } else {
-                binding.tvFavouriteWarning.visibility = View.INVISIBLE
-                adapter.submitList(it)
-            }
-        }
+//        viewModel.getFavouritesMovies.observe(viewLifecycleOwner){
+//            if (it.isEmpty()){
+//                binding.tvFavouriteWarning.visibility = View.VISIBLE
+//            } else {
+//                binding.tvFavouriteWarning.visibility = View.INVISIBLE
+//                adapter.movieList = it
+//            }
+//        }
         adapter.onMovieClickListener = object : MovieAdapter.OnMovieClickListener {
             override fun onMovieClick(movieId: Int) {
                 Toast.makeText(requireActivity(), movieId.toString(), Toast.LENGTH_SHORT).show()

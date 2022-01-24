@@ -89,6 +89,22 @@ class MovieMapper {
         )
     }
 
+    fun mapMovieDtoToMovieEntity(movieDto: MovieDto): Movie {
+        return Movie(
+            id = movieDto.id,
+            voteCount = movieDto.voteCount,
+            title = movieDto.title,
+            originalTitle = movieDto.originalTitle,
+            overview = movieDto.overview,
+            posterPath = BASE_POSTER_URL + POSTER_SIZE + movieDto.posterPath,
+            backdropPath = BASE_POSTER_URL + POSTER_SIZE + movieDto.backdropPath,
+            voteAverage = movieDto.voteAverage,
+            releaseDate = movieDto.releaseDate,
+            uniqueId = UNDEFINED_ID
+
+        )
+    }
+
     fun mapMovieEntityToFavouriteMovieDbModel(movie: Movie): FavouriteMovieDbModel {
         return FavouriteMovieDbModel(
             id = movie.id,

@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.masliaiev.filmspace.data.repository.MovieRepositoryImpl
 import com.masliaiev.filmspace.domain.usecases.GetMovieListUseCase
 import com.masliaiev.filmspace.domain.usecases.LoadMoviesUseCase
@@ -24,15 +25,7 @@ class MainFragmentViewModel(application: Application) : AndroidViewModel(applica
 
     val getMovies = getMoviesListUseCase.invoke()
 
-    fun loadMovies(popularity: Boolean, page: Int) {
-        viewModelScope.launch {
-            _errorLoadMovies.value = loadMoviesUseCase.loadMovies(
-                popularity = popularity,
-                lang = getCurrentLanguage(),
-                page = page
-            )
-        }
-    }
+    val results = loadMoviesUseCase.loadMovies("popularity.desc", getCurrentLanguage(), 1).cachedIn(viewModelScope)
 
     private fun getCurrentLanguage(): String {
         return Locale.getDefault().language

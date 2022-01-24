@@ -1,6 +1,9 @@
 package com.masliaiev.filmspace.domain.repository
 
 import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingData
+import com.masliaiev.filmspace.data.network.model.movie.MovieDto
 import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.domain.entity.Review
 import com.masliaiev.filmspace.domain.entity.Trailer
@@ -25,7 +28,7 @@ interface MovieRepository {
 
     suspend fun deleteFavouriteMovie(id: Int)
 
-    suspend fun loadMovies(popularity: Boolean, lang: String, page: Int): Boolean
+    fun loadMovies(sorted: String, lang: String, page: Int): LiveData<PagingData<Movie>>
 
     suspend fun loadTrailers(movieId: Int): List<Trailer>?
 

@@ -3,9 +3,13 @@ package com.masliaiev.filmspace.data.repository
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.liveData
 import com.masliaiev.filmspace.data.database.AppDatabase
 import com.masliaiev.filmspace.data.mapper.MovieMapper
 import com.masliaiev.filmspace.data.network.ApiFactory
+import com.masliaiev.filmspace.data.network.MoviesPageSource
 import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.domain.entity.Review
 import com.masliaiev.filmspace.domain.entity.Trailer
@@ -73,29 +77,35 @@ class MovieRepositoryImpl(private val application: Application) : MovieRepositor
         movieDao.deleteFavouriteMovie(id)
     }
 
-    override suspend fun loadMovies(popularity: Boolean, lang: String, page: Int): Boolean {
-        try {
-            val movies = if (popularity) {
-                apiService.getPopularityMovies(lang = lang, page = page)
-            } else {
-                apiService.getTopRatedMovies(lang = lang, page = page)
-            }
-            if (page == 1) {
-                movieDao.deleteAllMovies()
-            }
-            movies.results?.let {
-                movieDao.insertMovieList(it.map {
-                    mapper.mapMovieDtoToMovieDbModel(it)
-                })
-            }
-        } catch (e: Exception) {
-            return false
-        }
-        return true
-    }
+    override fun loadMovies(sorted: String, lang: String, page: Int) = Pager(
+        config = PagingConfig(
+            pageSize = 20,
+            maxSize = 100,
+            enablePlaceholders = false
+        ), pagingSourceFactory = {MoviesPageSource(apiService, lang, sorted)}
+    ).liveData
+//        try {
+//            val movies = if (popularity) {
+//                apiService.getPopularityMovies(lang = lang, page = page.toString())
+//            } else {
+//                apiService.getTopRatedMovies(lang = lang, page = page.toString())
+//            }
+//            if (page == 1) {
+//                movieDao.deleteAllMovies()
+//            }
+//            movies.results?.let {
+//                movieDao.insertMovieList(it.map {
+//                    mapper.mapMovieDtoToMovieDbModel(it)
+//                })
+//            }
+//        } catch (e: Exception) {
+//            return false
+//        }
+//        return true
+
 
     override suspend fun loadTrailers(movieId: Int): List<Trailer>? {
-        val trailers = apiService.getTrailers(movieId = movieId).results?.let {
+        val trailers = apiService.getTrailers(movieId = movieId.toString()).results?.let {
             it.map {
                 mapper.mapTrailerDtoToTrailerEntity(it)
             }
@@ -104,7 +114,7 @@ class MovieRepositoryImpl(private val application: Application) : MovieRepositor
     }
 
     override suspend fun loadReviews(movieId: Int): List<Review>? {
-        val reviews = apiService.getReviews(movieId = movieId).results?.let {
+        val reviews = apiService.getReviews(movieId = movieId.toString()).results?.let {
             it.map {
                 mapper.mapReviewDtoToReviewEntity(it)
             }
@@ -114,7 +124,7 @@ class MovieRepositoryImpl(private val application: Application) : MovieRepositor
 
     override suspend fun searchMovies(lang: String, query: String, page: Int): List<Movie>? {
         val searchedMovies =
-            apiService.searchMovie(lang = lang, query = query, page = page).results?.let {
+            apiService.searchMovie(lang = lang, query = query, page = page.toString()).results?.let {
                 it.map {
                     mapper.mapSearchedMovieDtoToMovieEntity(it)
                 }
