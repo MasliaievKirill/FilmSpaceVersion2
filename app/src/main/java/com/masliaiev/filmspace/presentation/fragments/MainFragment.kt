@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.masliaiev.filmspace.databinding.FragmentMainBinding
 import com.masliaiev.filmspace.presentation.activites.DetailActivity
@@ -55,6 +58,11 @@ class MainFragment : Fragment() {
         viewModel.results.observe(viewLifecycleOwner){
             adapter.submitData(viewLifecycleOwner.lifecycle, it)
 
+        }
+        adapter.addLoadStateListener { state:CombinedLoadStates ->
+            binding.rvMovies.isVisible = state.refresh != LoadState.Loading
+            binding.progressBarLoadingMovies.isVisible = state.refresh == LoadState.Loading
+            binding.imageViewWarning.isVisible = state.refresh is LoadState.Error
         }
 
 
