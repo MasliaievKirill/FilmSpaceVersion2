@@ -84,24 +84,7 @@ class MovieRepositoryImpl(private val application: Application) : MovieRepositor
             enablePlaceholders = false
         ), pagingSourceFactory = {MoviesPageSource(apiService, lang, sorted)}
     ).liveData
-//        try {
-//            val movies = if (popularity) {
-//                apiService.getPopularityMovies(lang = lang, page = page.toString())
-//            } else {
-//                apiService.getTopRatedMovies(lang = lang, page = page.toString())
-//            }
-//            if (page == 1) {
-//                movieDao.deleteAllMovies()
-//            }
-//            movies.results?.let {
-//                movieDao.insertMovieList(it.map {
-//                    mapper.mapMovieDtoToMovieDbModel(it)
-//                })
-//            }
-//        } catch (e: Exception) {
-//            return false
-//        }
-//        return true
+
 
 
     override suspend fun loadTrailers(movieId: Int): List<Trailer>? {

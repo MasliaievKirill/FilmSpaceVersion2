@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -50,6 +51,12 @@ class FavouriteFragment : Fragment() {
 //                adapter.movieList = it
 //            }
 //        }
+//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner ,object : OnBackPressedCallback(true){
+//            override fun handleOnBackPressed() {
+//                requireActivity().supportFragmentManager.popBackStack("MainFragment", 0)
+//            }
+//        })
+
         adapter.onMovieClickListener = object : MovieAdapter.OnMovieClickListener {
             override fun onMovieClick(movieId: Int) {
                 Toast.makeText(requireActivity(), movieId.toString(), Toast.LENGTH_SHORT).show()

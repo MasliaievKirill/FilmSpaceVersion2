@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -27,17 +26,15 @@ class MainFragment : Fragment() {
         MovieAdapter()
     }
 
-//    private var page = 1
-
-
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding
         get() = _binding ?: throw RuntimeException("FragmentMainBinding is null")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        loadMovies(true, page)
-//        page++
+        if (savedInstanceState == null) {
+            viewModel.loadMovies(SORT_BY_POPULARITY)
+        }
     }
 
     override fun onCreateView(
@@ -52,29 +49,16 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.rvMovies.adapter = adapter
         binding.rvMovies.layoutManager = GridLayoutManager(requireContext(), 2)
-//        viewModel.getMovies.observe(viewLifecycleOwner) {
-//            adapter.movieList = it
-//        }
-        viewModel.results.observe(viewLifecycleOwner){
+
+        viewModel.moviesList.observe(viewLifecycleOwner) {
             adapter.submitData(viewLifecycleOwner.lifecycle, it)
 
         }
-        adapter.addLoadStateListener { state:CombinedLoadStates ->
+        adapter.addLoadStateListener { state: CombinedLoadStates ->
             binding.rvMovies.isVisible = state.refresh != LoadState.Loading
             binding.progressBarLoadingMovies.isVisible = state.refresh == LoadState.Loading
             binding.imageViewWarning.isVisible = state.refresh is LoadState.Error
         }
-
-
-
-
-//        viewModel.errorLoadMovies.observe(viewLifecycleOwner) {
-//            if (!it) {
-//                Toast.makeText(requireActivity(), "Problem with connection", Toast.LENGTH_SHORT)
-//                    .show()
-//            }
-//        }
-
 
         adapter.onMovieClickListener = object : MovieAdapter.OnMovieClickListener {
             override fun onMovieClick(movieId: Int) {
@@ -82,15 +66,6 @@ class MainFragment : Fragment() {
                 startActivity(DetailActivity.newIntent(requireActivity(), movieId))
             }
         }
-//        adapter.onReachEndListener = object : MovieAdapter.OnReachEndListener {
-//            override fun onReachEnd() {
-//                Toast.makeText(requireActivity(),"End", Toast.LENGTH_SHORT).show()
-//                loadMovies(true, page)
-//                page++
-//            }
-//        }
-
-
     }
 
     override fun onDestroyView() {
@@ -98,9 +73,10 @@ class MainFragment : Fragment() {
         _binding = null
     }
 
-//    private fun loadMovies (popularity: Boolean, page: Int){
-//        viewModel.loadMovies(true, page)
-//    }
+    companion object {
+        private const val SORT_BY_POPULARITY = "popularity.desc"
+        private const val SORT_BY_TOP_RATED = "vote_average.desc"
+    }
 
 
 }
