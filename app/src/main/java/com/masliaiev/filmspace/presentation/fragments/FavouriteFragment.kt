@@ -5,16 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.masliaiev.filmspace.R
 import com.masliaiev.filmspace.databinding.FragmentFavouriteBinding
+import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.presentation.activites.DetailActivity
-import com.masliaiev.filmspace.presentation.adapters.MovieAdapter
+import com.masliaiev.filmspace.presentation.adapters.FavouriteMovieAdapter
 import com.masliaiev.filmspace.presentation.view_models.FavouriteFragmentViewModel
-import java.lang.RuntimeException
 
 
 class FavouriteFragment : Fragment() {
@@ -24,7 +22,7 @@ class FavouriteFragment : Fragment() {
     }
 
     private val adapter by lazy {
-        MovieAdapter()
+        FavouriteMovieAdapter()
     }
 
     private var _binding: FragmentFavouriteBinding? = null
@@ -35,7 +33,7 @@ class FavouriteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFavouriteBinding.inflate(inflater,container,false)
+        _binding = FragmentFavouriteBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -43,26 +41,25 @@ class FavouriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.rvFavouriteMovies.adapter = adapter
         binding.rvFavouriteMovies.layoutManager = GridLayoutManager(requireContext(), 2)
-//        viewModel.getFavouritesMovies.observe(viewLifecycleOwner){
-//            if (it.isEmpty()){
-//                binding.tvFavouriteWarning.visibility = View.VISIBLE
-//            } else {
-//                binding.tvFavouriteWarning.visibility = View.INVISIBLE
-//                adapter.movieList = it
-//            }
-//        }
-//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner ,object : OnBackPressedCallback(true){
-//            override fun handleOnBackPressed() {
-//                requireActivity().supportFragmentManager.popBackStack("MainFragment", 0)
-//            }
-//        })
-
-        adapter.onMovieClickListener = object : MovieAdapter.OnMovieClickListener {
-            override fun onMovieClick(movieId: Int) {
-                Toast.makeText(requireActivity(), movieId.toString(), Toast.LENGTH_SHORT).show()
-                startActivity(DetailActivity.newIntent(requireActivity(), movieId))
+        viewModel.getFavouritesMovies.observe(viewLifecycleOwner) {
+            if (it.isEmpty()) {
+                binding.tvFavouriteWarning.visibility = View.VISIBLE
+                binding.rvFavouriteMovies.visibility = View.INVISIBLE
+            } else {
+                binding.tvFavouriteWarning.visibility = View.INVISIBLE
+                binding.rvFavouriteMovies.visibility = View.VISIBLE
+                adapter.submitList(it)
             }
         }
+
+        adapter.onFavouriteMovieClickListener =
+            object : FavouriteMovieAdapter.OnFavouriteMovieClickListener {
+                override fun onFavouriteMovieClick(movie: Movie) {
+                    Toast.makeText(requireActivity(), movie.id.toString(), Toast.LENGTH_SHORT)
+                        .show()
+                    startActivity(DetailActivity.newIntent(requireActivity(), movie))
+                }
+            }
 
     }
 

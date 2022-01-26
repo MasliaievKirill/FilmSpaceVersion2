@@ -12,6 +12,7 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.masliaiev.filmspace.databinding.FragmentMainBinding
+import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.presentation.activites.DetailActivity
 import com.masliaiev.filmspace.presentation.adapters.MovieAdapter
 import com.masliaiev.filmspace.presentation.view_models.MainFragmentViewModel
@@ -61,9 +62,9 @@ class MainFragment : Fragment() {
         }
 
         adapter.onMovieClickListener = object : MovieAdapter.OnMovieClickListener {
-            override fun onMovieClick(movieId: Int) {
-                Toast.makeText(requireActivity(), movieId.toString(), Toast.LENGTH_SHORT).show()
-                startActivity(DetailActivity.newIntent(requireActivity(), movieId))
+            override fun onMovieClick(movie: Movie) {
+                Toast.makeText(requireActivity(), movie.id.toString(), Toast.LENGTH_SHORT).show()
+                startActivity(DetailActivity.newIntent(requireActivity(), movie))
             }
         }
     }

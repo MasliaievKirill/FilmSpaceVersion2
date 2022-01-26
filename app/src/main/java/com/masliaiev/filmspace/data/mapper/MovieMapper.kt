@@ -23,8 +23,7 @@ class MovieMapper {
             posterPath = BASE_POSTER_URL + POSTER_SIZE + movieDbModel.posterPath,
             backdropPath = BASE_POSTER_URL + POSTER_SIZE + movieDbModel.backdropPath,
             voteAverage = movieDbModel.voteAverage,
-            releaseDate = movieDbModel.releaseDate,
-            uniqueId = movieDbModel.uniqueId
+            releaseDate = movieDbModel.releaseDate
         )
     }
 
@@ -38,8 +37,7 @@ class MovieMapper {
             posterPath = favouriteMovieDbModel.posterPath,
             backdropPath = favouriteMovieDbModel.backdropPath,
             voteAverage = favouriteMovieDbModel.voteAverage,
-            releaseDate = favouriteMovieDbModel.releaseDate,
-            uniqueId = favouriteMovieDbModel.uniqueId
+            releaseDate = favouriteMovieDbModel.releaseDate
         )
     }
 
@@ -53,8 +51,7 @@ class MovieMapper {
             posterPath = BASE_POSTER_URL + POSTER_SIZE + searchedMovieDbModel.posterPath,
             backdropPath = BASE_POSTER_URL + POSTER_SIZE + searchedMovieDbModel.backdropPath,
             voteAverage = searchedMovieDbModel.voteAverage,
-            releaseDate = searchedMovieDbModel.releaseDate,
-            uniqueId = searchedMovieDbModel.uniqueId
+            releaseDate = searchedMovieDbModel.releaseDate
         )
     }
 
@@ -83,9 +80,7 @@ class MovieMapper {
             posterPath = BASE_POSTER_URL + POSTER_SIZE + searchedMoviesDto.posterPath,
             backdropPath = BASE_POSTER_URL + POSTER_SIZE + searchedMoviesDto.backdropPath,
             voteAverage = searchedMoviesDto.voteAverage,
-            releaseDate = searchedMoviesDto.releaseDate,
-            uniqueId = UNDEFINED_ID
-
+            releaseDate = searchedMoviesDto.releaseDate
         )
     }
 
@@ -99,8 +94,7 @@ class MovieMapper {
             posterPath = BASE_POSTER_URL + POSTER_SIZE + movieDto.posterPath,
             backdropPath = BASE_POSTER_URL + POSTER_SIZE + movieDto.backdropPath,
             voteAverage = movieDto.voteAverage,
-            releaseDate = movieDto.releaseDate,
-            uniqueId = UNDEFINED_ID
+            releaseDate = movieDto.releaseDate
 
         )
     }
@@ -129,7 +123,7 @@ class MovieMapper {
             overview = movie.overview,
             posterPath = movie.posterPath,
             backdropPath = movie.backdropPath,
-            voteAverage = movie.voteAverage?.toDouble(),
+            voteAverage = movie.voteAverage,
             releaseDate = movie.releaseDate,
             uniqueId = UNDEFINED_ID
         )
@@ -137,7 +131,7 @@ class MovieMapper {
 
     fun mapTrailerDtoToTrailerEntity(trailerDto: TrailerDto): Trailer {
         return Trailer(
-            key = BASE_YOUTUBE_URL + trailerDto.key,
+            key = trailerDto.key,
             name = trailerDto.name
         )
     }
