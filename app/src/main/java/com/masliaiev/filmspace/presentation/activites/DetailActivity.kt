@@ -3,6 +3,7 @@ package com.masliaiev.filmspace.presentation.activites
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -12,7 +13,6 @@ import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.presentation.view_models.DetailActivityViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
 import com.squareup.picasso.Picasso
 
 class DetailActivity : AppCompatActivity() {
@@ -64,15 +64,22 @@ class DetailActivity : AppCompatActivity() {
         binding.toolbarDetail.setNavigationOnClickListener {
             onBackPressed()
         }
+        binding.toolbarDetail.title = movie?.title
         viewModel.loadTrailers(movie?.id!!)
-        viewModel.trailersList.observe(this){
-            val trailer = it[0]
-            binding.youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener(){
-                override fun onReady(youTubePlayer: YouTubePlayer) {
-                    youTubePlayer.cueVideo(trailer.key!!, 0F)
-                }
-            })
+        viewModel.trailersList.observe(this) {
+            if (it != null) {
+                val trailer = it[0]
+                binding.youtubePlayerView.addYouTubePlayerListener(object :
+                    AbstractYouTubePlayerListener() {
+                    override fun onReady(youTubePlayer: YouTubePlayer) {
+                        youTubePlayer.cueVideo(trailer.key!!, 0F)
+                    }
+                })
+            } else {
+                binding.youtubePlayerView.visibility = View.INVISIBLE
+            }
         }
+        lifecycle.addObserver(binding.youtubePlayerView)
     }
 
     override fun onDestroy() {

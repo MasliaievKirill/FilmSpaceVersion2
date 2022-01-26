@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingSource
 import androidx.paging.liveData
 import com.masliaiev.filmspace.data.database.AppDatabase
 import com.masliaiev.filmspace.data.mapper.MovieMapper
@@ -14,6 +15,8 @@ import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.domain.entity.Review
 import com.masliaiev.filmspace.domain.entity.Trailer
 import com.masliaiev.filmspace.domain.repository.MovieRepository
+import retrofit2.HttpException
+import java.io.IOException
 
 class MovieRepositoryImpl(private val application: Application) : MovieRepository {
 
@@ -88,12 +91,18 @@ class MovieRepositoryImpl(private val application: Application) : MovieRepositor
 
 
     override suspend fun loadTrailers(movieId: Int): List<Trailer>? {
-        val trailers = apiService.getTrailers(movieId = movieId.toString()).results?.let {
-            it.map {
-                mapper.mapTrailerDtoToTrailerEntity(it)
+        var trailers:List<Trailer>? = null
+         try {
+            trailers = apiService.getTrailers(movieId = movieId.toString()).results?.let {
+                it.map {
+                    mapper.mapTrailerDtoToTrailerEntity(it)
+                }
             }
+        }  catch (exception: Exception) {
+
         }
         return trailers
+
     }
 
     override suspend fun loadReviews(movieId: Int): List<Review>? {

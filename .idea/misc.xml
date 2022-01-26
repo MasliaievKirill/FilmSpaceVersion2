@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/drawable/background_detail_info.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/drawable/background_gray.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/drawable/bottom_nav_selector.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/drawable/ic_arrow_left.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/drawable/ic_close.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/drawable/ic_error_warning.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/drawable/ic_favourite.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/drawable/ic_favourite_add_star.xml" value="0.26614583333333336" />
