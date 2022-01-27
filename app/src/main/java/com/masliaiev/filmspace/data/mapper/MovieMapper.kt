@@ -65,8 +65,7 @@ class MovieMapper {
             posterPath = movieDto.posterPath,
             backdropPath = movieDto.backdropPath,
             voteAverage = movieDto.voteAverage,
-            releaseDate = movieDto.releaseDate,
-            uniqueId = UNDEFINED_ID
+            releaseDate = movieDto.releaseDate
         )
     }
 
@@ -109,8 +108,7 @@ class MovieMapper {
             posterPath = movie.posterPath,
             backdropPath = movie.backdropPath,
             voteAverage = movie.voteAverage,
-            releaseDate = movie.releaseDate,
-            uniqueId = UNDEFINED_ID
+            releaseDate = movie.releaseDate
         )
     }
 
@@ -124,8 +122,7 @@ class MovieMapper {
             posterPath = movie.posterPath,
             backdropPath = movie.backdropPath,
             voteAverage = movie.voteAverage,
-            releaseDate = movie.releaseDate,
-            uniqueId = UNDEFINED_ID
+            releaseDate = movie.releaseDate
         )
     }
 

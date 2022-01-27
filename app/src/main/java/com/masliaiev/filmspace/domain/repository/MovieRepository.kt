@@ -28,12 +28,12 @@ interface MovieRepository {
 
     suspend fun deleteFavouriteMovie(id: Int)
 
-    fun loadMovies(sorted: String, lang: String, page: Int): LiveData<PagingData<Movie>>
+    fun loadMovies(sorted: String, lang: String): LiveData<PagingData<Movie>>
 
     suspend fun loadTrailers(movieId: Int): List<Trailer>?
 
     suspend fun loadReviews(movieId: Int): List<Review>?
 
-    suspend fun searchMovies(lang: String, query: String, page: Int): List<Movie>?
+    fun searchMovies(lang: String, query: String): LiveData<PagingData<Movie>>
 
 }

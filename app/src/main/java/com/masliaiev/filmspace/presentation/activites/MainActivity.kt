@@ -12,11 +12,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val mainFragment = MainFragment()
+    private val mainFragment = MainFragment.newInstance()
 
-    private val favouriteFragment by lazy { FavouriteFragment() }
+    private val favouriteFragment by lazy { FavouriteFragment.newInstance() }
 
-    private val searchFragment by lazy { SearchFragment() }
+    private val searchFragment by lazy { SearchFragment.newInstance() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

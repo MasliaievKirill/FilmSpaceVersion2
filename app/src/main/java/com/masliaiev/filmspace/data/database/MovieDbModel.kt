@@ -5,8 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "movies")
 data class MovieDbModel (
-    @PrimaryKey (autoGenerate = true)
-    val uniqueId: Int,
+    @PrimaryKey
     val id: Int,
     val voteCount: Int?,
     val title: String?,

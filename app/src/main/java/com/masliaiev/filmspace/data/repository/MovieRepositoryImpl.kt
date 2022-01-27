@@ -11,6 +11,7 @@ import com.masliaiev.filmspace.data.database.AppDatabase
 import com.masliaiev.filmspace.data.mapper.MovieMapper
 import com.masliaiev.filmspace.data.network.ApiFactory
 import com.masliaiev.filmspace.data.network.MoviesPageSource
+import com.masliaiev.filmspace.data.network.SearchMoviesPageSource
 import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.domain.entity.Review
 import com.masliaiev.filmspace.domain.entity.Trailer
@@ -80,7 +81,7 @@ class MovieRepositoryImpl(private val application: Application) : MovieRepositor
         movieDao.deleteFavouriteMovie(id)
     }
 
-    override fun loadMovies(sorted: String, lang: String, page: Int) = Pager(
+    override fun loadMovies(sorted: String, lang: String) = Pager(
         config = PagingConfig(
             pageSize = 20,
             maxSize = 100,
@@ -114,14 +115,12 @@ class MovieRepositoryImpl(private val application: Application) : MovieRepositor
         return reviews
     }
 
-    override suspend fun searchMovies(lang: String, query: String, page: Int): List<Movie>? {
-        val searchedMovies =
-            apiService.searchMovie(lang = lang, query = query, page = page.toString()).results?.let {
-                it.map {
-                    mapper.mapSearchedMovieDtoToMovieEntity(it)
-                }
-            }
-        return searchedMovies
-    }
+    override fun searchMovies(lang: String, query: String) = Pager(
+        config = PagingConfig(
+            pageSize = 20,
+            maxSize = 100,
+            enablePlaceholders = false
+        ), pagingSourceFactory = {SearchMoviesPageSource(apiService,lang, query)}
+    ).liveData
 
 }

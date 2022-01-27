@@ -17,15 +17,23 @@ class MainFragmentViewModel(application: Application) : AndroidViewModel(applica
 
     private val loadMoviesUseCase = LoadMoviesUseCase(repository)
 
-    lateinit var moviesList: LiveData<PagingData<Movie>>
+    val moviesListPopularity = loadMovies(SORT_BY_POPULARITY)
 
-    fun loadMovies(sorted: String) {
-        moviesList = loadMoviesUseCase.loadMovies(sorted, getCurrentLanguage(), 1)
+    val moviesListTpoRated = loadMovies(SORT_BY_TOP_RATED)
+
+
+    private fun loadMovies(sorted: String): LiveData<PagingData<Movie>> {
+        return loadMoviesUseCase.loadMovies(sorted, getCurrentLanguage())
             .cachedIn(viewModelScope)
     }
 
     private fun getCurrentLanguage(): String {
         return Locale.getDefault().language
+    }
+
+    companion object{
+        private const val SORT_BY_POPULARITY = "popularity.desc"
+        private const val SORT_BY_TOP_RATED = "vote_average.desc"
     }
 
 

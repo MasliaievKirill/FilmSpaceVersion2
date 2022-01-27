@@ -40,7 +40,7 @@ class FavouriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rvFavouriteMovies.adapter = adapter
-        binding.rvFavouriteMovies.layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.rvFavouriteMovies.layoutManager = GridLayoutManager(requireContext(), COLUMN_COUNT)
         viewModel.getFavouritesMovies.observe(viewLifecycleOwner) {
             if (it.isEmpty()) {
                 binding.tvFavouriteWarning.visibility = View.VISIBLE
@@ -60,12 +60,19 @@ class FavouriteFragment : Fragment() {
                     startActivity(DetailActivity.newIntent(requireActivity(), movie))
                 }
             }
-
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        fun newInstance(): FavouriteFragment {
+            return FavouriteFragment()
+        }
+
+        private const val COLUMN_COUNT = 2
     }
 
 }

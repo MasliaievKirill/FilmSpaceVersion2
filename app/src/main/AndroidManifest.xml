@@ -13,9 +13,12 @@
         android:theme="@style/Theme.FilmSpace">
         <activity
             android:name=".presentation.activites.DetailActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".presentation.activites.MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

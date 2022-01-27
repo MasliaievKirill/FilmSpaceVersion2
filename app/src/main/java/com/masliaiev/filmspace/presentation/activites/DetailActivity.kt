@@ -23,7 +23,6 @@ class DetailActivity : AppCompatActivity() {
     }
     private var inFavourite: Boolean = false
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -67,7 +66,7 @@ class DetailActivity : AppCompatActivity() {
         binding.toolbarDetail.title = movie?.title
         viewModel.loadTrailers(movie?.id!!)
         viewModel.trailersList.observe(this) {
-            if (it != null) {
+            if (it != null && it.isNotEmpty()) {
                 val trailer = it[0]
                 binding.youtubePlayerView.addYouTubePlayerListener(object :
                     AbstractYouTubePlayerListener() {

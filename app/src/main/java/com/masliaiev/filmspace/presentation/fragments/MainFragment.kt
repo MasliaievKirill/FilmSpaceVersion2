@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.masliaiev.filmspace.databinding.FragmentMainBinding
 import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.presentation.activites.DetailActivity
-import com.masliaiev.filmspace.presentation.adapters.MovieAdapter
+import com.masliaiev.filmspace.presentation.adapters.MoviePagingAdapter
 import com.masliaiev.filmspace.presentation.view_models.MainFragmentViewModel
 
 class MainFragment : Fragment() {
@@ -24,19 +24,16 @@ class MainFragment : Fragment() {
     }
 
     private val adapter by lazy {
-        MovieAdapter()
+        MoviePagingAdapter()
+    }
+
+    private val adapterTopRated by lazy {
+        MoviePagingAdapter()
     }
 
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding
         get() = _binding ?: throw RuntimeException("FragmentMainBinding is null")
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (savedInstanceState == null) {
-            viewModel.loadMovies(SORT_BY_POPULARITY)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,24 +45,39 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvMovies.adapter = adapter
-        binding.rvMovies.layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.rvPopularityMovies.adapter = adapter
+        binding.rvPopularityMovies.layoutManager = GridLayoutManager(requireContext(), COLUMN_COUNT)
 
-        viewModel.moviesList.observe(viewLifecycleOwner) {
+        viewModel.moviesListPopularity.observe(viewLifecycleOwner) {
             adapter.submitData(viewLifecycleOwner.lifecycle, it)
-
         }
+
+        viewModel.moviesListTpoRated.observe(viewLifecycleOwner) {
+            adapterTopRated.submitData(viewLifecycleOwner.lifecycle, it)
+        }
+
+        binding.rvTopRatedMovies.adapter = adapterTopRated
+        binding.rvTopRatedMovies.layoutManager = GridLayoutManager(requireContext(), COLUMN_COUNT)
+
         adapter.addLoadStateListener { state: CombinedLoadStates ->
-            binding.rvMovies.isVisible = state.refresh != LoadState.Loading
+            binding.rvPopularityMovies.isVisible = state.refresh != LoadState.Loading
             binding.progressBarLoadingMovies.isVisible = state.refresh == LoadState.Loading
             binding.imageViewWarning.isVisible = state.refresh is LoadState.Error
         }
 
-        adapter.onMovieClickListener = object : MovieAdapter.OnMovieClickListener {
+        adapter.onMovieClickListener = object : MoviePagingAdapter.OnMovieClickListener {
             override fun onMovieClick(movie: Movie) {
                 Toast.makeText(requireActivity(), movie.id.toString(), Toast.LENGTH_SHORT).show()
                 startActivity(DetailActivity.newIntent(requireActivity(), movie))
             }
+        }
+        binding.buttonPopularity.setOnClickListener {
+            binding.rvPopularityMovies.visibility = View.VISIBLE
+            binding.rvTopRatedMovies.visibility = View.INVISIBLE
+        }
+        binding.buttonTopRated.setOnClickListener {
+            binding.rvPopularityMovies.visibility = View.INVISIBLE
+            binding.rvTopRatedMovies.visibility = View.VISIBLE
         }
     }
 
@@ -74,9 +86,13 @@ class MainFragment : Fragment() {
         _binding = null
     }
 
+
     companion object {
-        private const val SORT_BY_POPULARITY = "popularity.desc"
-        private const val SORT_BY_TOP_RATED = "vote_average.desc"
+        fun newInstance(): MainFragment {
+            return MainFragment()
+        }
+
+        private const val COLUMN_COUNT = 2
     }
 
 

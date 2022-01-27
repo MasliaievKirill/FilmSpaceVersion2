@@ -8,7 +8,7 @@ import com.masliaiev.filmspace.databinding.MovieItemBinding
 import com.masliaiev.filmspace.domain.entity.Movie
 import com.squareup.picasso.Picasso
 
-class MovieAdapter :
+class MoviePagingAdapter :
     PagingDataAdapter<Movie, MovieViewHolder>(MovieDiffCallback()) {
 
 
