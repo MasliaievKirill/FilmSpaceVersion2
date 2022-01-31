@@ -55,19 +55,6 @@ class MovieMapper {
         )
     }
 
-    fun mapMovieDtoToMovieDbModel(movieDto: MovieDto): MovieDbModel {
-        return MovieDbModel(
-            id = movieDto.id,
-            voteCount = movieDto.voteCount,
-            title = movieDto.title,
-            originalTitle = movieDto.originalTitle,
-            overview = movieDto.overview,
-            posterPath = movieDto.posterPath,
-            backdropPath = movieDto.backdropPath,
-            voteAverage = movieDto.voteAverage,
-            releaseDate = movieDto.releaseDate
-        )
-    }
 
     fun mapSearchedMovieDtoToMovieEntity(searchedMoviesDto: SearchedMovieDto): Movie {
         return Movie(
@@ -144,8 +131,6 @@ class MovieMapper {
     companion object {
         private const val BASE_POSTER_URL = "https://image.tmdb.org/t/p/"
         private const val POSTER_SIZE = "w780"
-        private const val BASE_YOUTUBE_URL = "https://www.youtube.com/watch?v="
-        private const val UNDEFINED_ID = 0
     }
 
 

@@ -1,6 +1,8 @@
 package com.masliaiev.filmspace.presentation.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import com.masliaiev.filmspace.R
@@ -13,8 +15,12 @@ class MoviePagingAdapter :
 
 
     var onMovieClickListener: OnMovieClickListener? = null
+    var favouriteMoviesList: List<Movie>? = null
+
+    private var count = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+        Log.d("Adapter", "onCreateViewHolder ${++count}")
         val binding = MovieItemBinding.inflate(
             LayoutInflater.from(
                 parent.context
@@ -26,10 +32,23 @@ class MoviePagingAdapter :
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-
+//        Log.d("Adapter", "onBindViewHolder ${++count}")
         val movie = getItem(position)
+        if (favouriteMoviesList != null){
+            var inFavourite = false
+            for (favouriteMovie in favouriteMoviesList!!){
+                if (favouriteMovie == movie){
+                    inFavourite = true
+                }
+            }
+            if (inFavourite){
+                holder.binding.ivFavouriteIndicator.visibility = View.VISIBLE
+            } else {
+                holder.binding.ivFavouriteIndicator.visibility = View.INVISIBLE
+            }
+        }
         Picasso.get().load(movie?.posterPath).placeholder(R.drawable.placeholder_large)
-            .into(holder.binding.imageViewSmallPoster)
+            .into(holder.binding.ivSmallPoster)
         holder.binding.root.setOnClickListener {
             onMovieClickListener?.onMovieClick(movie!!)
         }

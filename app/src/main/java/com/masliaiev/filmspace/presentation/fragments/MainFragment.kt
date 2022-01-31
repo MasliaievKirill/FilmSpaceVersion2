@@ -1,6 +1,7 @@
 package com.masliaiev.filmspace.presentation.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,7 @@ class MainFragment : Fragment() {
         ViewModelProvider(this)[MainFragmentViewModel::class.java]
     }
 
-    private val adapter by lazy {
+    private val adapterPopularity by lazy {
         MoviePagingAdapter()
     }
 
@@ -45,32 +46,49 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvPopularityMovies.adapter = adapter
+        binding.rvPopularityMovies.adapter = adapterPopularity
         binding.rvPopularityMovies.layoutManager = GridLayoutManager(requireContext(), COLUMN_COUNT)
-
-        viewModel.moviesListPopularity.observe(viewLifecycleOwner) {
-            adapter.submitData(viewLifecycleOwner.lifecycle, it)
-        }
-
-        viewModel.moviesListTpoRated.observe(viewLifecycleOwner) {
-            adapterTopRated.submitData(viewLifecycleOwner.lifecycle, it)
-        }
 
         binding.rvTopRatedMovies.adapter = adapterTopRated
         binding.rvTopRatedMovies.layoutManager = GridLayoutManager(requireContext(), COLUMN_COUNT)
 
-        adapter.addLoadStateListener { state: CombinedLoadStates ->
+        viewModel.moviesListPopularity.observe(viewLifecycleOwner){
+            adapterPopularity.submitData(viewLifecycleOwner.lifecycle, it)
+        }
+
+        viewModel.moviesListTpoRated.observe(viewLifecycleOwner){
+            adapterTopRated.submitData(viewLifecycleOwner.lifecycle, it)
+        }
+
+
+
+
+
+
+        adapterPopularity.addLoadStateListener { state: CombinedLoadStates ->
             binding.rvPopularityMovies.isVisible = state.refresh != LoadState.Loading
             binding.progressBarLoadingMovies.isVisible = state.refresh == LoadState.Loading
             binding.imageViewWarning.isVisible = state.refresh is LoadState.Error
         }
 
-        adapter.onMovieClickListener = object : MoviePagingAdapter.OnMovieClickListener {
+        adapterTopRated.addLoadStateListener { state: CombinedLoadStates ->
+            binding.progressBarLoadingMovies.isVisible = state.refresh == LoadState.Loading
+        }
+
+        adapterPopularity.onMovieClickListener = object : MoviePagingAdapter.OnMovieClickListener {
             override fun onMovieClick(movie: Movie) {
                 Toast.makeText(requireActivity(), movie.id.toString(), Toast.LENGTH_SHORT).show()
                 startActivity(DetailActivity.newIntent(requireActivity(), movie))
             }
         }
+
+        adapterTopRated.onMovieClickListener = object : MoviePagingAdapter.OnMovieClickListener {
+            override fun onMovieClick(movie: Movie) {
+                Toast.makeText(requireActivity(), movie.id.toString(), Toast.LENGTH_SHORT).show()
+                startActivity(DetailActivity.newIntent(requireActivity(), movie))
+            }
+        }
+
         binding.buttonPopularity.setOnClickListener {
             binding.rvPopularityMovies.visibility = View.VISIBLE
             binding.rvTopRatedMovies.visibility = View.INVISIBLE
@@ -81,6 +99,20 @@ class MainFragment : Fragment() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.d("MainFragment", "onPause")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("MainFragment", "onResume")
+        viewModel.favouriteMoviesList.observe(viewLifecycleOwner){
+            adapterPopularity.favouriteMoviesList = it
+            adapterTopRated.favouriteMoviesList = it
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -88,10 +120,6 @@ class MainFragment : Fragment() {
 
 
     companion object {
-        fun newInstance(): MainFragment {
-            return MainFragment()
-        }
-
         private const val COLUMN_COUNT = 2
     }
 

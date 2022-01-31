@@ -26,7 +26,7 @@ class FavouriteMovieAdapter : ListAdapter<Movie, MovieViewHolder>(MovieDiffCallb
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = getItem(position)
         Picasso.get().load(movie?.posterPath).placeholder(R.drawable.placeholder_large)
-            .into(holder.binding.imageViewSmallPoster)
+            .into(holder.binding.ivSmallPoster)
         holder.binding.root.setOnClickListener {
             onFavouriteMovieClickListener?.onFavouriteMovieClick(movie!!)
         }
