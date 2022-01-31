@@ -10,23 +10,33 @@ import androidx.lifecycle.ViewModelProvider
 import com.masliaiev.filmspace.R
 import com.masliaiev.filmspace.databinding.ActivityDetailBinding
 import com.masliaiev.filmspace.domain.entity.Movie
+import com.masliaiev.filmspace.presentation.FilmSpaceApp
 import com.masliaiev.filmspace.presentation.view_models.DetailActivityViewModel
+import com.masliaiev.filmspace.presentation.view_models.ViewModelFactory
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.squareup.picasso.Picasso
+import javax.inject.Inject
 
 class DetailActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityDetailBinding
-    private val viewModel by lazy {
-        ViewModelProvider(this)[DetailActivityViewModel::class.java]
+    private val component by lazy {
+        (application as FilmSpaceApp).component
     }
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private lateinit var binding: ActivityDetailBinding
+    private lateinit var viewModel: DetailActivityViewModel
     private var inFavourite: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        viewModel = ViewModelProvider(this, viewModelFactory)[DetailActivityViewModel::class.java]
         val movie = parseIntent()
         movie?.let {
             binding.movieInfo.tvTitle.text = it.title

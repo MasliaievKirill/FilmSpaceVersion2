@@ -1,15 +1,12 @@
 package com.masliaiev.filmspace.presentation.view_models
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import com.masliaiev.filmspace.data.repository.MovieRepositoryImpl
+import androidx.lifecycle.ViewModel
 import com.masliaiev.filmspace.domain.usecases.GetFavouriteMovieListUseCase
+import javax.inject.Inject
 
-class FavouriteFragmentViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository = MovieRepositoryImpl(application)
-
-    private val getFavouritesMoviesUseCase = GetFavouriteMovieListUseCase(repository)
+class FavouriteFragmentViewModel @Inject constructor(
+    private val getFavouritesMoviesUseCase: GetFavouriteMovieListUseCase
+) : ViewModel() {
 
     val getFavouritesMovies = getFavouritesMoviesUseCase.invoke()
 

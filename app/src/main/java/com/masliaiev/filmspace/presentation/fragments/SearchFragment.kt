@@ -1,5 +1,6 @@
 package com.masliaiev.filmspace.presentation.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,17 +14,25 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.masliaiev.filmspace.databinding.FragmentSearchBinding
 import com.masliaiev.filmspace.domain.entity.Movie
+import com.masliaiev.filmspace.presentation.FilmSpaceApp
 import com.masliaiev.filmspace.presentation.activites.DetailActivity
 import com.masliaiev.filmspace.presentation.adapters.SearchedMovieAdapter
 import com.masliaiev.filmspace.presentation.adapters.SearchedMoviePagingAdapter
 import com.masliaiev.filmspace.presentation.view_models.SearchFragmentViewModel
+import com.masliaiev.filmspace.presentation.view_models.ViewModelFactory
+import javax.inject.Inject
 
 
 class SearchFragment : Fragment() {
 
-    private val viewModel by lazy {
-        ViewModelProvider(this)[SearchFragmentViewModel::class.java]
+    private val component by lazy {
+        (requireActivity().application as FilmSpaceApp).component
     }
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private lateinit var viewModel: SearchFragmentViewModel
 
     private val adapter by lazy {
         SearchedMovieAdapter()
@@ -37,6 +46,11 @@ class SearchFragment : Fragment() {
     val binding: FragmentSearchBinding
         get() = _binding ?: throw RuntimeException("FragmentSearchBinding is null")
 
+    override fun onAttach(context: Context) {
+        component.inject(this)
+        super.onAttach(context)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,6 +61,7 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this, viewModelFactory)[SearchFragmentViewModel::class.java]
         binding.rvSearchedMoviesFromDb.adapter = adapter
         binding.rvSearchedMovies.adapter = adapterPaging
         binding.rvSearchedMoviesFromDb.layoutManager =

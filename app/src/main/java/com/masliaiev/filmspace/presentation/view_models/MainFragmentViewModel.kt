@@ -1,41 +1,37 @@
 package com.masliaiev.filmspace.presentation.view_models
 
-import android.app.Application
-import androidx.lifecycle.*
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import com.masliaiev.filmspace.data.repository.MovieRepositoryImpl
-import com.masliaiev.filmspace.domain.entity.Movie
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.masliaiev.filmspace.domain.usecases.GetFavouriteMovieListUseCase
 import com.masliaiev.filmspace.domain.usecases.GetMovieListUseCase
 import com.masliaiev.filmspace.domain.usecases.LoadMoviesUseCase
 import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
 
-class MainFragmentViewModel(application: Application) : AndroidViewModel(application) {
+class MainFragmentViewModel @Inject constructor(
+    private val loadMoviesUseCase: LoadMoviesUseCase,
+    private val getMovieListUseCase: GetMovieListUseCase,
+    private val getFavouriteMovieListUseCase: GetFavouriteMovieListUseCase
+) : ViewModel() {
 
-    private val repository = MovieRepositoryImpl(application)
 
-    private val loadMoviesUseCase = LoadMoviesUseCase(repository)
-    private val getFavouriteMovieListUseCase = GetFavouriteMovieListUseCase(repository)
-
-    val moviesListPopularity = loadMovies(SORT_BY_POPULARITY)
-
-    val moviesListTpoRated = loadMovies(SORT_BY_TOP_RATED)
+    val moviesList = getMovieListUseCase.invoke()
 
     val favouriteMoviesList = getFavouriteMovieListUseCase.invoke()
 
 
-    private fun loadMovies(sorted: String): LiveData<PagingData<Movie>> {
-        return loadMoviesUseCase.loadMovies(sorted, getCurrentLanguage())
-            .cachedIn(viewModelScope)
+    fun loadMovies(sorted: String, page: String) {
+        viewModelScope.launch {
+            loadMoviesUseCase.loadMovies(sorted = sorted, lang = getCurrentLanguage(), page = page)
+        }
     }
 
     private fun getCurrentLanguage(): String {
         return Locale.getDefault().language
     }
 
-    companion object{
+    companion object {
         private const val SORT_BY_POPULARITY = "popularity.desc"
         private const val SORT_BY_TOP_RATED = "vote_average.desc"
     }

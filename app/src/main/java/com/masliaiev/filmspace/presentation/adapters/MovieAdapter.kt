@@ -1,26 +1,21 @@
 package com.masliaiev.filmspace.presentation.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.ListAdapter
 import com.masliaiev.filmspace.R
 import com.masliaiev.filmspace.databinding.MovieItemBinding
 import com.masliaiev.filmspace.domain.entity.Movie
 import com.squareup.picasso.Picasso
 
-class MoviePagingAdapter :
-    PagingDataAdapter<Movie, MovieViewHolder>(MovieDiffCallback()) {
+class MovieAdapter :
+    ListAdapter<Movie, MovieViewHolder>(MovieDiffCallback()) {
 
 
     var onMovieClickListener: OnMovieClickListener? = null
-    var favouriteMoviesList: List<Movie>? = null
-
-    private var count = 0
+    var onReachEndListener: OnReachEndListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        Log.d("Adapter", "onCreateViewHolder ${++count}")
         val binding = MovieItemBinding.inflate(
             LayoutInflater.from(
                 parent.context
@@ -32,21 +27,13 @@ class MoviePagingAdapter :
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-//        Log.d("Adapter", "onBindViewHolder ${++count}")
-        val movie = getItem(position)
-        if (favouriteMoviesList != null){
-            var inFavourite = false
-            for (favouriteMovie in favouriteMoviesList!!){
-                if (favouriteMovie == movie){
-                    inFavourite = true
-                }
-            }
-            if (inFavourite){
-                holder.binding.ivFavouriteIndicator.visibility = View.VISIBLE
-            } else {
-                holder.binding.ivFavouriteIndicator.visibility = View.INVISIBLE
-            }
+        if (onReachEndListener != null &&
+            currentList.size >= MAX_SIZE_OF_MOVIE_IN_ONE_PAGE &&
+            position >= currentList.size - GAP
+        ) {
+            onReachEndListener?.onReachEnd()
         }
+        val movie = getItem(position)
         Picasso.get().load(movie?.posterPath).placeholder(R.drawable.placeholder_large)
             .into(holder.binding.ivSmallPoster)
         holder.binding.root.setOnClickListener {
@@ -63,6 +50,10 @@ class MoviePagingAdapter :
 
     interface OnMovieClickListener {
         fun onMovieClick(movie: Movie)
+    }
+
+    interface OnReachEndListener {
+        fun onReachEnd()
     }
 
 

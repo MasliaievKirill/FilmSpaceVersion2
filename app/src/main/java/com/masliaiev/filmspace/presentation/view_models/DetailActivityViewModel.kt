@@ -1,26 +1,24 @@
 package com.masliaiev.filmspace.presentation.view_models
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.masliaiev.filmspace.data.repository.MovieRepositoryImpl
 import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.domain.entity.Review
 import com.masliaiev.filmspace.domain.entity.Trailer
 import com.masliaiev.filmspace.domain.usecases.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailActivityViewModel(application: Application) : AndroidViewModel(application) {
+class DetailActivityViewModel @Inject constructor(
+    private val addFavouriteMovieUseCase: AddFavouriteMovieUseCase,
+    private val deleteFavouriteMovieUseCase: DeleteFavouriteMovieUseCase,
+    private val getFavouriteMovieListUseCase: GetFavouriteMovieListUseCase,
+    private val loadTrailersMoviesUseCase: LoadTrailersMoviesUseCase,
+    private val loadReviewsUseCase: LoadReviewsUseCase
+) : ViewModel() {
 
-    private val repository = MovieRepositoryImpl(application)
-
-    private val addFavouriteMovieUseCase = AddFavouriteMovieUseCase(repository)
-    private val deleteFavouriteMovieUseCase = DeleteFavouriteMovieUseCase(repository)
-    private val getFavouriteMovieListUseCase = GetFavouriteMovieListUseCase(repository)
-    private val loadTrailersMoviesUseCase = LoadTrailersMoviesUseCase(repository)
-    private val loadReviewsUseCase = LoadReviewsUseCase(repository)
 
     val favouriteMoviesList = getFavouriteMovieListUseCase.invoke()
 
