@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [MovieDbModel::class, FavouriteMovieDbModel::class, SearchedMovieDbModel::class],
-    version = 14,
+    version = 17,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

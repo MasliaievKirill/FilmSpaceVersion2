@@ -8,6 +8,7 @@ import androidx.paging.liveData
 import com.masliaiev.filmspace.data.database.MovieDao
 import com.masliaiev.filmspace.data.mapper.MovieMapper
 import com.masliaiev.filmspace.data.network.ApiService
+import com.masliaiev.filmspace.data.network.MoviesPageSource
 import com.masliaiev.filmspace.data.network.SearchMoviesPageSource
 import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.domain.entity.Review
@@ -76,14 +77,17 @@ class MovieRepositoryImpl @Inject constructor(
         movieDao.deleteFavouriteMovie(id)
     }
 
-    override suspend fun loadMovies(sorted: String, lang: String, page: String) {
-        val moviesDto = apiService.getMovies(lang = lang, sorted = sorted, page = page).results
-        moviesDto?.let {
-            movieDao.insertMovieList(moviesDto.map {
-                mapper.mapMovieDtoToMovieDbModel(it)
-            })
-        }
+    override suspend fun deleteAllMovies() {
+        movieDao.deleteAllMovies()
     }
+
+    override fun loadMovies(sorted: String, lang: String) = Pager(
+        config = PagingConfig(
+            pageSize = 20,
+            maxSize = 100,
+            enablePlaceholders = false
+        ), pagingSourceFactory = { MoviesPageSource(apiService, lang, sorted) }
+    ).liveData
 
 
     override suspend fun loadTrailers(movieId: Int): List<Trailer>? {

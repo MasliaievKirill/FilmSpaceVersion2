@@ -82,7 +82,6 @@ class MovieMapper @Inject constructor(){
             backdropPath = BASE_POSTER_URL + POSTER_SIZE + movieDto.backdropPath,
             voteAverage = movieDto.voteAverage,
             releaseDate = movieDto.releaseDate
-
         )
     }
 
@@ -97,7 +96,6 @@ class MovieMapper @Inject constructor(){
             backdropPath = BASE_POSTER_URL + POSTER_SIZE + movieDto.backdropPath,
             voteAverage = movieDto.voteAverage,
             releaseDate = movieDto.releaseDate
-
         )
     }
 
@@ -147,6 +145,7 @@ class MovieMapper @Inject constructor(){
     companion object {
         private const val BASE_POSTER_URL = "https://image.tmdb.org/t/p/"
         private const val POSTER_SIZE = "w780"
+        const val UNDEFINED_ID = 0
     }
 
 

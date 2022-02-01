@@ -28,7 +28,9 @@ interface MovieRepository {
 
     suspend fun deleteFavouriteMovie(id: Int)
 
-    suspend fun loadMovies(sorted: String, lang: String, page: String)
+    suspend fun deleteAllMovies()
+
+    fun loadMovies(sorted: String, lang: String): LiveData<PagingData<Movie>>
 
     suspend fun loadTrailers(movieId: Int): List<Trailer>?
 

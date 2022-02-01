@@ -50,7 +50,7 @@ class DetailActivity : AppCompatActivity() {
             .into(binding.ivPoster)
         viewModel.favouriteMoviesList.observe(this) {
             for (favouriteMovie in it) {
-                if (favouriteMovie == movie) {
+                if (favouriteMovie.id == movie?.id) {
                     inFavourite = true
                     binding.ivAddRemoveFavourite.setImageResource(R.drawable.favourite_add_star_gold_small)
                 }

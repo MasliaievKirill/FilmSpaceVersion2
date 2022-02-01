@@ -3,13 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_gray"
+    android:layout_margin="4dp"
+    android:elevation="4dp">
 
     <ImageView
         android:id="@+id/iv_small_poster"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="8dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/tv_movie_titIe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -17,29 +21,23 @@
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"/>
 
-    <ImageView
-        android:id="@+id/iv_favourite_indicator"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"
-        app:srcCompat="@drawable/favourite_add_star_gold_small"/>
-
     <TextView
-        android:id="@+id/tv_titIe_poster_do_not_exist"
+        android:id="@+id/tv_movie_titIe"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="24dp"
         android:gravity="center"
-        android:padding="8dp"
+        android:padding="2dp"
         android:textSize="15sp"
         android:textColor="@color/white"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintTop_toBottomOf="@id/iv_small_poster"
         app:layout_constraintBottom_toBottomOf="@+id/iv_small_poster"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"/>
+        tools:text="Title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
