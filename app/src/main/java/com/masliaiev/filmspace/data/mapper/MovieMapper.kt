@@ -1,32 +1,16 @@
 package com.masliaiev.filmspace.data.mapper
 
 import com.masliaiev.filmspace.data.database.FavouriteMovieDbModel
-import com.masliaiev.filmspace.data.database.MovieDbModel
 import com.masliaiev.filmspace.data.database.SearchedMovieDbModel
 import com.masliaiev.filmspace.data.network.model.movie.MovieDto
-import com.masliaiev.filmspace.data.network.model.review.ReviewDto
 import com.masliaiev.filmspace.data.network.model.search.SearchedMovieDto
 import com.masliaiev.filmspace.data.network.model.trailer.TrailerDto
 import com.masliaiev.filmspace.domain.entity.Movie
-import com.masliaiev.filmspace.domain.entity.Review
 import com.masliaiev.filmspace.domain.entity.Trailer
 import javax.inject.Inject
 
-class MovieMapper @Inject constructor(){
+class MovieMapper @Inject constructor() {
 
-    fun mapMovieDbModelToMovieEntity(movieDbModel: MovieDbModel): Movie {
-        return Movie(
-            id = movieDbModel.id,
-            voteCount = movieDbModel.voteCount,
-            title = movieDbModel.title,
-            originalTitle = movieDbModel.originalTitle,
-            overview = movieDbModel.overview,
-            posterPath = BASE_POSTER_URL + POSTER_SIZE + movieDbModel.posterPath,
-            backdropPath = BASE_POSTER_URL + POSTER_SIZE + movieDbModel.backdropPath,
-            voteAverage = movieDbModel.voteAverage,
-            releaseDate = movieDbModel.releaseDate
-        )
-    }
 
     fun mapFavouriteMovieDbModelToMovieEntity(favouriteMovieDbModel: FavouriteMovieDbModel): Movie {
         return Movie(
@@ -85,19 +69,6 @@ class MovieMapper @Inject constructor(){
         )
     }
 
-    fun mapMovieDtoToMovieDbModel(movieDto: MovieDto): MovieDbModel {
-        return MovieDbModel(
-            id = movieDto.id,
-            voteCount = movieDto.voteCount,
-            title = movieDto.title,
-            originalTitle = movieDto.originalTitle,
-            overview = movieDto.overview,
-            posterPath = BASE_POSTER_URL + POSTER_SIZE + movieDto.posterPath,
-            backdropPath = BASE_POSTER_URL + POSTER_SIZE + movieDto.backdropPath,
-            voteAverage = movieDto.voteAverage,
-            releaseDate = movieDto.releaseDate
-        )
-    }
 
     fun mapMovieEntityToFavouriteMovieDbModel(movie: Movie): FavouriteMovieDbModel {
         return FavouriteMovieDbModel(
@@ -134,18 +105,10 @@ class MovieMapper @Inject constructor(){
         )
     }
 
-    fun mapReviewDtoToReviewEntity(reviewDto: ReviewDto): Review {
-        return Review(
-            author = reviewDto.author,
-            content = reviewDto.content
-        )
-    }
-
 
     companion object {
         private const val BASE_POSTER_URL = "https://image.tmdb.org/t/p/"
         private const val POSTER_SIZE = "w780"
-        const val UNDEFINED_ID = 0
     }
 
 

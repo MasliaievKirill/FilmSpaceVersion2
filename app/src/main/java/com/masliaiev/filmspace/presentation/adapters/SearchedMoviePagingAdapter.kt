@@ -26,20 +26,15 @@ class SearchedMoviePagingAdapter :
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-
         val movie = getItem(position)
-        Picasso.get().load(movie?.posterPath).placeholder(R.drawable.placeholder_large)
-            .into(holder.binding.ivSmallPoster)
-        holder.binding.root.setOnClickListener {
-            onSearchedMovieClickListener?.onMovieClick(movie!!)
+        movie?.let {
+            Picasso.get().load(movie.posterPath).placeholder(R.drawable.placeholder_large)
+                .into(holder.binding.ivSmallPoster)
+            holder.binding.tvMovieTitIe.text = movie.title
+            holder.binding.root.setOnClickListener {
+                onSearchedMovieClickListener?.onMovieClick(movie)
+            }
         }
-    }
-
-
-    companion object {
-        const val MAX_POOL_SIZE = 20
-        private const val MAX_SIZE_OF_MOVIE_IN_ONE_PAGE = 20
-        private const val GAP = 4
     }
 
     interface OnSearchedMovieClickListener {

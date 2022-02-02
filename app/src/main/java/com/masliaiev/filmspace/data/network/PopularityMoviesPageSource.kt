@@ -7,10 +7,9 @@ import com.masliaiev.filmspace.domain.entity.Movie
 import retrofit2.HttpException
 import java.io.IOException
 
-class SearchMoviesPageSource(
+class PopularityMoviesPageSource(
     private val apiService: ApiService,
-    private val lang: String,
-    private val query: String
+    private val lang: String
 ) : PagingSource<Int, Movie>() {
 
     private val mapper = MovieMapper()
@@ -21,15 +20,15 @@ class SearchMoviesPageSource(
 
         return try {
             val response =
-                apiService.searchMovie(lang = lang, query = query, page = position.toString())
-            val searchedMoviesListDto = response.results?.map {
-                mapper.mapSearchedMovieDtoToMovieEntity(it)
+                apiService.getPopularityMovies(lang = lang, page = position.toString())
+            val moviesList = response.results?.map {
+                mapper.mapMovieDtoToMovieEntity(it)
             }
 
             LoadResult.Page(
-                data = searchedMoviesListDto!!,
+                data = moviesList!!,
                 prevKey = if (position == 1) null else position - 1,
-                nextKey = if (searchedMoviesListDto.isEmpty()) null else position + 1
+                nextKey = if (moviesList.isEmpty()) null else position + 1
 
             )
         } catch (exception: IOException) {
@@ -40,10 +39,13 @@ class SearchMoviesPageSource(
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
-        return state.anchorPosition
+    override fun getRefreshKey(state: PagingState<Int, Movie>): Int {
+        return FIRST_PAGE
     }
 
+    companion object {
+        private const val FIRST_PAGE = 1
+    }
 
 
 }

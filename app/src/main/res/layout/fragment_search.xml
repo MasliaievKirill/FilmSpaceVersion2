@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/overlay_light"
     tools:context=".presentation.fragments.SearchFragment">
 
 
@@ -13,10 +14,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="@drawable/background_gray"
+        android:elevation="4dp"
         android:ems="10"
         android:hint="Search"
+        android:imeOptions="actionSearch"
         android:inputType="textPersonName"
-        android:paddingStart="30dp"
+        android:paddingStart="35dp"
         android:paddingTop="10dp"
         android:paddingEnd="30dp"
         android:paddingBottom="10dp"
@@ -24,19 +27,20 @@
         android:textColorHint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:imeOptions="actionSearch"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_recently_searched"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:elevation="4dp"
+        android:text="Recently searched:"
+        android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_search"
-        tools:text="Recently searched:" />
+        app:layout_constraintTop_toBottomOf="@+id/et_search" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_searched_movies_from_db"
@@ -66,7 +70,8 @@
         android:src="@drawable/ic_search"
         app:layout_constraintBottom_toBottomOf="@id/et_search"
         app:layout_constraintStart_toStartOf="@id/et_search"
-        app:layout_constraintTop_toTopOf="@id/et_search" />
+        app:layout_constraintTop_toTopOf="@id/et_search"
+        android:elevation="4dp"/>
 
     <ImageView
         android:id="@+id/iv_delete_icon"
@@ -76,7 +81,9 @@
         android:src="@drawable/ic_close"
         app:layout_constraintBottom_toBottomOf="@id/et_search"
         app:layout_constraintEnd_toEndOf="@id/et_search"
-        app:layout_constraintTop_toTopOf="@id/et_search" />
+        app:layout_constraintTop_toTopOf="@id/et_search"
+        android:elevation="4dp"
+        android:visibility="gone"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

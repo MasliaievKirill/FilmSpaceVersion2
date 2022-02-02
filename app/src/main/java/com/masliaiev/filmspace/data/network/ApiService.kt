@@ -11,10 +11,20 @@ import retrofit2.http.Query
 interface ApiService {
 
     @GET("discover/movie")
-    suspend fun getMovies(
+    suspend fun getPopularityMovies(
         @Query(QUERY_PARAM_API_KEY) apiKey: String = API_KEY,
         @Query(QUERY_PARAMS_LANGUAGE) lang: String,
-        @Query(QUERY_PARAMS_SORT_BY) sorted: String,
+        @Query(QUERY_PARAMS_SORT_BY) sorted: String = SORT_BY_POPULARITY,
+        @Query(QUERY_PARAMS_MIN_VOTE_COUNT) minVoteCount: String = MIN_VOTE_COUNT,
+        @Query(QUERY_PARAMS_PAGE) page: String
+
+    ): MoviesListDto
+
+    @GET("discover/movie")
+    suspend fun getTopRatedMovies(
+        @Query(QUERY_PARAM_API_KEY) apiKey: String = API_KEY,
+        @Query(QUERY_PARAMS_LANGUAGE) lang: String,
+        @Query(QUERY_PARAMS_SORT_BY) sorted: String = SORT_BY_TOP_RATED,
         @Query(QUERY_PARAMS_MIN_VOTE_COUNT) minVoteCount: String = MIN_VOTE_COUNT,
         @Query(QUERY_PARAMS_PAGE) page: String
 
@@ -28,12 +38,6 @@ interface ApiService {
 
     ): TrailersListDto
 
-    @GET("movie/{movieId}/reviews")
-    suspend fun getReviews(
-        @Path(PATH_PARAM_MOVIE_ID) movieId: String,
-        @Query(QUERY_PARAM_API_KEY) apiKey: String = API_KEY
-
-    ): ReviewListDto
 
     @GET("search/movie")
     suspend fun searchMovie(

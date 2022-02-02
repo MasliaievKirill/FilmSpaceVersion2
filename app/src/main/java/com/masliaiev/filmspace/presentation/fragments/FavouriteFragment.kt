@@ -70,7 +70,7 @@ class FavouriteFragment : Fragment() {
         adapter.onFavouriteMovieClickListener =
             object : FavouriteMovieAdapter.OnFavouriteMovieClickListener {
                 override fun onFavouriteMovieClick(movie: Movie) {
-                    Toast.makeText(requireActivity(), movie.id.toString(), Toast.LENGTH_SHORT)
+                    Toast.makeText(requireActivity(), "Loading...", Toast.LENGTH_SHORT)
                         .show()
                     startActivity(DetailActivity.newIntent(requireActivity(), movie))
                 }

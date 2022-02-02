@@ -4,16 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import androidx.paging.liveData
 import com.masliaiev.filmspace.data.database.MovieDao
 import com.masliaiev.filmspace.data.mapper.MovieMapper
 import com.masliaiev.filmspace.data.network.ApiService
-import com.masliaiev.filmspace.data.network.MoviesPageSource
+import com.masliaiev.filmspace.data.network.PopularityMoviesPageSource
 import com.masliaiev.filmspace.data.network.SearchMoviesPageSource
+import com.masliaiev.filmspace.data.network.TopRatedMoviesPageSource
 import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.domain.entity.Review
 import com.masliaiev.filmspace.domain.entity.Trailer
 import com.masliaiev.filmspace.domain.repository.MovieRepository
+import java.util.*
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -23,13 +26,6 @@ class MovieRepositoryImpl @Inject constructor(
 ) : MovieRepository {
 
 
-    override fun getMovieList(): LiveData<List<Movie>> {
-        return Transformations.map(movieDao.getMovieList()) {
-            it.map {
-                mapper.mapMovieDbModelToMovieEntity(it)
-            }
-        }
-    }
 
     override fun getFavouriteMovieList(): LiveData<List<Movie>> {
         return Transformations.map(movieDao.getFavouriteMovieList()) {
@@ -47,23 +43,6 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getMovie(id: Int): LiveData<Movie> {
-        return Transformations.map(movieDao.getMovie(id)) {
-            mapper.mapMovieDbModelToMovieEntity(it)
-        }
-    }
-
-    override fun getFavouriteMovie(id: Int): LiveData<Movie> {
-        return Transformations.map(movieDao.getFavouriteMovie(id)) {
-            mapper.mapFavouriteMovieDbModelToMovieEntity(it)
-        }
-    }
-
-    override fun getSearchedMovie(id: Int): LiveData<Movie> {
-        return Transformations.map(movieDao.getSearchedMovie(id)) {
-            mapper.mapSearchedMovieDbModelToMovieEntity(it)
-        }
-    }
 
     override suspend fun addFavouriteMovie(movie: Movie) {
         movieDao.addFavouriteMovie(mapper.mapMovieEntityToFavouriteMovieDbModel(movie))
@@ -77,18 +56,23 @@ class MovieRepositoryImpl @Inject constructor(
         movieDao.deleteFavouriteMovie(id)
     }
 
-    override suspend fun deleteAllMovies() {
-        movieDao.deleteAllMovies()
-    }
 
-    override fun loadMovies(sorted: String, lang: String) = Pager(
+
+    override fun loadPopularityMovies() = Pager(
         config = PagingConfig(
             pageSize = 20,
             maxSize = 100,
             enablePlaceholders = false
-        ), pagingSourceFactory = { MoviesPageSource(apiService, lang, sorted) }
+        ), pagingSourceFactory = { PopularityMoviesPageSource(apiService, getCurrentLanguage()) }
     ).liveData
 
+    override fun loadTopRatedMovies()= Pager(
+        config = PagingConfig(
+            pageSize = 20,
+            maxSize = 100,
+            enablePlaceholders = false
+        ), pagingSourceFactory = { TopRatedMoviesPageSource(apiService, getCurrentLanguage()) }
+    ).liveData
 
     override suspend fun loadTrailers(movieId: Int): List<Trailer>? {
         var trailers: List<Trailer>? = null
@@ -105,15 +89,6 @@ class MovieRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun loadReviews(movieId: Int): List<Review>? {
-        val reviews = apiService.getReviews(movieId = movieId.toString()).results?.let {
-            it.map {
-                mapper.mapReviewDtoToReviewEntity(it)
-            }
-        }
-        return reviews
-    }
-
     override fun searchMovies(lang: String, query: String) = Pager(
         config = PagingConfig(
             pageSize = 20,
@@ -121,5 +96,10 @@ class MovieRepositoryImpl @Inject constructor(
             enablePlaceholders = false
         ), pagingSourceFactory = { SearchMoviesPageSource(apiService, lang, query) }
     ).liveData
+
+
+    private fun getCurrentLanguage(): String {
+        return Locale.getDefault().language
+    }
 
 }

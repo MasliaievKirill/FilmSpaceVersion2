@@ -8,7 +8,6 @@ import androidx.paging.cachedIn
 import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.domain.usecases.AddSearchedMovieUseCase
 import com.masliaiev.filmspace.domain.usecases.GetSearchedMovieListUseCase
-import com.masliaiev.filmspace.domain.usecases.GetSearchedMovieUseCase
 import com.masliaiev.filmspace.domain.usecases.SearchMoviesUseCase
 import kotlinx.coroutines.launch
 import java.util.*
@@ -17,17 +16,22 @@ import javax.inject.Inject
 class SearchFragmentViewModel @Inject constructor(
     private val getSearchedMovieListUseCase: GetSearchedMovieListUseCase,
     private val searchMoviesUseCase: SearchMoviesUseCase,
-    private val addSearchedMovieUseCase: AddSearchedMovieUseCase,
-    private val getSearchedMovieUseCase: GetSearchedMovieUseCase
+    private val addSearchedMovieUseCase: AddSearchedMovieUseCase
 ) : ViewModel() {
 
 
     val searchedMoviesListFromDb = getSearchedMovieListUseCase.invoke()
 
-    fun loadMovies(query: String): LiveData<PagingData<Movie>> {
+    var emptyQuery: String = ""
+
+    var searchList = searchMoviesUseCase.searchMovies(getCurrentLanguage(), emptyQuery)
+        .cachedIn(viewModelScope)
+
+    fun searchMovies(query: String): LiveData<PagingData<Movie>> {
         return searchMoviesUseCase.searchMovies(getCurrentLanguage(), query)
             .cachedIn(viewModelScope)
     }
+
 
     fun addSearchedMovieInDb(movie: Movie) {
         viewModelScope.launch { addSearchedMovieUseCase.addSearchedMovie(movie) }

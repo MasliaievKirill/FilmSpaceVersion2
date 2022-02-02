@@ -70,9 +70,23 @@ class SearchFragment : Fragment() {
         viewModel.searchedMoviesListFromDb.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
+
         binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                searchMovies()
+                val query = binding.etSearch.text.toString().trim()
+                if (query.isNotEmpty()) {
+                    viewModel.searchMovies(query).removeObservers(viewLifecycleOwner)
+                    viewModel.searchMovies(query).observe(viewLifecycleOwner) {
+                        adapterPaging.submitData(viewLifecycleOwner.lifecycle, it)
+                    }
+                    adapterPaging.refresh()
+                    binding.rvSearchedMoviesFromDb.visibility = View.INVISIBLE
+                    binding.rvSearchedMovies.visibility = View.VISIBLE
+                    binding.tvRecentlySearched.visibility = View.INVISIBLE
+                } else {
+                    Toast.makeText(requireActivity(), "Need text to query", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
             false
         }
@@ -88,6 +102,7 @@ class SearchFragment : Fragment() {
                     binding.ivDeleteIcon.visibility = View.INVISIBLE
                     binding.rvSearchedMoviesFromDb.visibility = View.VISIBLE
                     binding.rvSearchedMovies.visibility = View.INVISIBLE
+                    binding.tvRecentlySearched.visibility = View.VISIBLE
                 } else {
                     binding.ivDeleteIcon.visibility = View.VISIBLE
                 }
@@ -99,7 +114,7 @@ class SearchFragment : Fragment() {
         adapter.onSearchedMovieFromDbClickListener =
             object : SearchedMovieAdapter.OnSearchedMovieFromDbClickListener {
                 override fun onSearchedMovieClick(movie: Movie) {
-                    Toast.makeText(requireActivity(), movie.id.toString(), Toast.LENGTH_SHORT)
+                    Toast.makeText(requireActivity(), "Loading...", Toast.LENGTH_SHORT)
                         .show()
                     startActivity(DetailActivity.newIntent(requireActivity(), movie))
                 }
@@ -108,24 +123,17 @@ class SearchFragment : Fragment() {
             object : SearchedMoviePagingAdapter.OnSearchedMovieClickListener {
                 override fun onMovieClick(movie: Movie) {
                     viewModel.addSearchedMovieInDb(movie)
-                    Toast.makeText(requireActivity(), movie.id.toString(), Toast.LENGTH_SHORT)
+                    Toast.makeText(requireActivity(), "Loading...", Toast.LENGTH_SHORT)
                         .show()
                     startActivity(DetailActivity.newIntent(requireActivity(), movie))
                 }
             }
     }
 
-    private fun searchMovies() {
-        val query = binding.etSearch.text.toString().trim()
-        if (query.isNotEmpty()) {
-            viewModel.loadMovies(query).observe(viewLifecycleOwner) {
-                adapterPaging.submitData(viewLifecycleOwner.lifecycle, it)
-            }
-            binding.rvSearchedMoviesFromDb.visibility = View.INVISIBLE
-            binding.rvSearchedMovies.visibility = View.VISIBLE
-
-        } else {
-            Toast.makeText(requireActivity(), "Need text to query", Toast.LENGTH_SHORT).show()
+    override fun onStart() {
+        super.onStart()
+        if (binding.etSearch.text.isNotEmpty()) {
+            binding.etSearch.text.clear()
         }
     }
 
@@ -135,10 +143,12 @@ class SearchFragment : Fragment() {
     }
 
     companion object {
+
         fun newInstance(): SearchFragment {
             return SearchFragment()
         }
 
         private const val COLUMN_COUNT = 2
+
     }
 }

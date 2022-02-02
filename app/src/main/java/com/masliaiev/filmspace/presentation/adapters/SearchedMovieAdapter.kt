@@ -8,7 +8,7 @@ import com.masliaiev.filmspace.databinding.MovieItemBinding
 import com.masliaiev.filmspace.domain.entity.Movie
 import com.squareup.picasso.Picasso
 
-class SearchedMovieAdapter: ListAdapter<Movie, MovieViewHolder>(MovieDiffCallback()) {
+class SearchedMovieAdapter : ListAdapter<Movie, MovieViewHolder>(MovieDiffCallback()) {
 
     var onSearchedMovieFromDbClickListener: OnSearchedMovieFromDbClickListener? = null
 
@@ -25,11 +25,15 @@ class SearchedMovieAdapter: ListAdapter<Movie, MovieViewHolder>(MovieDiffCallbac
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = getItem(position)
-        Picasso.get().load(movie?.posterPath).placeholder(R.drawable.placeholder_large)
-            .into(holder.binding.ivSmallPoster)
-        holder.binding.root.setOnClickListener {
-            onSearchedMovieFromDbClickListener?.onSearchedMovieClick(movie!!)
+        movie?.let {
+            Picasso.get().load(movie.posterPath).placeholder(R.drawable.placeholder_large)
+                .into(holder.binding.ivSmallPoster)
+            holder.binding.tvMovieTitIe.text = movie.title
+            holder.binding.root.setOnClickListener {
+                onSearchedMovieFromDbClickListener?.onSearchedMovieClick(movie)
+            }
         }
+
     }
 
     interface OnSearchedMovieFromDbClickListener {
