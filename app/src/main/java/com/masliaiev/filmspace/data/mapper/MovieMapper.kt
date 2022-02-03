@@ -100,14 +100,16 @@ class MovieMapper @Inject constructor() {
 
     fun mapTrailerDtoToTrailerEntity(trailerDto: TrailerDto): Trailer {
         return Trailer(
-            key = trailerDto.key,
-            name = trailerDto.name
+            key = BASE_YOUTUBE_URL + trailerDto.key,
+            name = trailerDto.name,
+            official = trailerDto.official
         )
     }
 
 
     companion object {
         private const val BASE_POSTER_URL = "https://image.tmdb.org/t/p/"
+        private const val BASE_YOUTUBE_URL = "https://www.youtube.com/watch?v="
         private const val POSTER_SIZE = "w780"
     }
 

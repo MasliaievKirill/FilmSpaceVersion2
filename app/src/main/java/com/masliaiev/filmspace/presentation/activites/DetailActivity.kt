@@ -2,6 +2,7 @@ package com.masliaiev.filmspace.presentation.activites
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -13,8 +14,6 @@ import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.presentation.FilmSpaceApp
 import com.masliaiev.filmspace.presentation.view_models.DetailActivityViewModel
 import com.masliaiev.filmspace.presentation.view_models.ViewModelFactory
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.squareup.picasso.Picasso
 import javax.inject.Inject
 
@@ -76,25 +75,23 @@ class DetailActivity : AppCompatActivity() {
         binding.toolbarDetail.title = movie?.title
         viewModel.loadTrailers(movie?.id!!)
         viewModel.trailersList.observe(this) {
-            if (it != null && it.isNotEmpty()) {
-                val trailer = it[0]
-                binding.youtubePlayerView.addYouTubePlayerListener(object :
-                    AbstractYouTubePlayerListener() {
-                    override fun onReady(youTubePlayer: YouTubePlayer) {
-                        youTubePlayer.cueVideo(trailer.key!!, 0F)
+            if (it.isNotEmpty()) {
+                for (trailer in it) {
+                    if (trailer.official != null && trailer.official) {
+                        binding.trailerInfo.visibility = View.VISIBLE
+                        binding.trailerInfo.setOnClickListener {
+                            val intentYouTube = Intent(Intent.ACTION_VIEW, Uri.parse(trailer.key))
+                            startActivity(intentYouTube)
+                        }
+                        binding.tvTrailer.text = trailer.name
+                        break
                     }
-                })
-            } else {
-                binding.youtubePlayerView.visibility = View.INVISIBLE
+                }
             }
         }
-        lifecycle.addObserver(binding.youtubePlayerView)
+
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        binding.youtubePlayerView.release()
-    }
 
     private fun parseIntent() =
         intent.getBundleExtra(EXTRA_MOVIE_BUNDLE)?.getParcelable<Movie>(EXTRA_MOVIE)

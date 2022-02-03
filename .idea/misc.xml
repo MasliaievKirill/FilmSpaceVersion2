@@ -13,6 +13,7 @@
         <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/drawable/ic_favourite_add_star.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/drawable/ic_home.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/drawable/ic_search.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/drawable/ic_youtube.xml" value="0.1525" />
         <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/layout/activity_detail.xml" value="0.264" />
         <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/layout/fragment_favourite.xml" value="0.25" />
@@ -20,6 +21,7 @@
         <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/layout/fragment_search.xml" value="0.25" />
         <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/layout/movie_info.xml" value="0.264" />
         <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/layout/movie_item.xml" value="0.25" />
+        <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/layout/trailer_info.xml" value="0.4612299465240642" />
         <entry key="..\:/Users/kiril/AndroidStudioProjects/FilmSpaceVersion2/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25" />
       </map>
     </option>

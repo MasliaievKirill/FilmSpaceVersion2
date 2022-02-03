@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.PagingData
 import androidx.paging.liveData
 import com.masliaiev.filmspace.data.database.MovieDao
 import com.masliaiev.filmspace.data.mapper.MovieMapper
@@ -13,7 +12,6 @@ import com.masliaiev.filmspace.data.network.PopularityMoviesPageSource
 import com.masliaiev.filmspace.data.network.SearchMoviesPageSource
 import com.masliaiev.filmspace.data.network.TopRatedMoviesPageSource
 import com.masliaiev.filmspace.domain.entity.Movie
-import com.masliaiev.filmspace.domain.entity.Review
 import com.masliaiev.filmspace.domain.entity.Trailer
 import com.masliaiev.filmspace.domain.repository.MovieRepository
 import java.util.*
@@ -24,7 +22,6 @@ class MovieRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
     private val mapper: MovieMapper
 ) : MovieRepository {
-
 
 
     override fun getFavouriteMovieList(): LiveData<List<Movie>> {
@@ -57,7 +54,6 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
 
-
     override fun loadPopularityMovies() = Pager(
         config = PagingConfig(
             pageSize = 20,
@@ -66,7 +62,7 @@ class MovieRepositoryImpl @Inject constructor(
         ), pagingSourceFactory = { PopularityMoviesPageSource(apiService, getCurrentLanguage()) }
     ).liveData
 
-    override fun loadTopRatedMovies()= Pager(
+    override fun loadTopRatedMovies() = Pager(
         config = PagingConfig(
             pageSize = 20,
             maxSize = 100,

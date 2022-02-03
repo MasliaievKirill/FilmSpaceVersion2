@@ -1,7 +1,6 @@
 package com.masliaiev.filmspace.data.network
 
 import com.masliaiev.filmspace.data.network.model.movie.MoviesListDto
-import com.masliaiev.filmspace.data.network.model.review.ReviewListDto
 import com.masliaiev.filmspace.data.network.model.search.SearchedMoviesListDto
 import com.masliaiev.filmspace.data.network.model.trailer.TrailersListDto
 import retrofit2.http.GET
