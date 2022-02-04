@@ -46,6 +46,7 @@ class SearchFragment : Fragment() {
     val binding: FragmentSearchBinding
         get() = _binding ?: throw RuntimeException("FragmentSearchBinding is null")
 
+
     override fun onAttach(context: Context) {
         component.inject(this)
         super.onAttach(context)
@@ -70,13 +71,17 @@ class SearchFragment : Fragment() {
         viewModel.searchedMoviesListFromDb.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
-
+        viewModel.searchList?.observe(viewLifecycleOwner){
+            adapterPaging.submitData(viewLifecycleOwner.lifecycle, it)
+        }
         binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val query = binding.etSearch.text.toString().trim()
                 if (query.isNotEmpty()) {
-                    viewModel.searchMovies(query).removeObservers(viewLifecycleOwner)
-                    viewModel.searchMovies(query).observe(viewLifecycleOwner) {
+                    viewModel.searchList?.removeObservers(viewLifecycleOwner)
+                    viewModel.query = query
+                    viewModel.searchMovies(query)
+                    viewModel.searchList?.observe(viewLifecycleOwner) {
                         adapterPaging.submitData(viewLifecycleOwner.lifecycle, it)
                     }
                     adapterPaging.refresh()
@@ -132,8 +137,10 @@ class SearchFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        if (binding.etSearch.text.isNotEmpty()) {
-            binding.etSearch.text.clear()
+        if (binding.etSearch.text.toString() == viewModel.query && binding.etSearch.text.isNotEmpty()) {
+            binding.rvSearchedMovies.visibility = View.VISIBLE
+            binding.rvSearchedMoviesFromDb.visibility = View.INVISIBLE
+            binding.tvRecentlySearched.visibility = View.INVISIBLE
         }
     }
 

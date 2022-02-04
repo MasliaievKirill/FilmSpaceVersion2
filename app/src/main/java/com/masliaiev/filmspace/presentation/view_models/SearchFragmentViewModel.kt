@@ -19,16 +19,19 @@ class SearchFragmentViewModel @Inject constructor(
     private val addSearchedMovieUseCase: AddSearchedMovieUseCase
 ) : ViewModel() {
 
+    var query: String = ""
+
+    init {
+        searchMovies(query)
+    }
 
     val searchedMoviesListFromDb = getSearchedMovieListUseCase.invoke()
 
-    var emptyQuery: String = ""
 
-    var searchList = searchMoviesUseCase.searchMovies(getCurrentLanguage(), emptyQuery)
-        .cachedIn(viewModelScope)
+    var searchList: LiveData<PagingData<Movie>>? = null
 
-    fun searchMovies(query: String): LiveData<PagingData<Movie>> {
-        return searchMoviesUseCase.searchMovies(getCurrentLanguage(), query)
+    fun searchMovies(query: String){
+        searchList = searchMoviesUseCase.searchMovies(getCurrentLanguage(), query)
             .cachedIn(viewModelScope)
     }
 
