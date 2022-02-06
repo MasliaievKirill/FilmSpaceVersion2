@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -100,14 +99,12 @@ class MainFragment : Fragment() {
 
         adapterPopularity.onMovieClickListener = object : MoviePagerAdapter.OnMovieClickListener {
             override fun onMovieClick(movie: Movie) {
-                Toast.makeText(requireActivity(), "Loading...", Toast.LENGTH_SHORT).show()
                 startActivity(DetailActivity.newIntent(requireActivity(), movie))
             }
         }
 
         adapterTopRated.onMovieClickListener = object : MoviePagerAdapter.OnMovieClickListener {
             override fun onMovieClick(movie: Movie) {
-                Toast.makeText(requireActivity(), "Loading...", Toast.LENGTH_SHORT).show()
                 startActivity(DetailActivity.newIntent(requireActivity(), movie))
             }
         }
@@ -117,8 +114,6 @@ class MainFragment : Fragment() {
             recyclerViewPopularity.isVisible = refreshState !is LoadState.Loading
             binding.progressBar.isVisible = refreshState is LoadState.Loading
             checkLoadStateError(refreshState)
-
-
         }
 
         adapterTopRated.addLoadStateListener {
@@ -126,7 +121,6 @@ class MainFragment : Fragment() {
             recyclerViewTopRated.isVisible = refreshState != LoadState.Loading
             binding.progressBar.isVisible = refreshState == LoadState.Loading
             checkLoadStateError(refreshState)
-
         }
 
         binding.buttonRetry.setOnClickListener {
@@ -137,14 +131,12 @@ class MainFragment : Fragment() {
         binding.buttonToFavourite.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToFavouriteFragment())
         }
-
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 
     private fun checkLoadStateError(loadState: LoadState) {
         binding.tabLayout.isVisible = loadState !is LoadState.Error

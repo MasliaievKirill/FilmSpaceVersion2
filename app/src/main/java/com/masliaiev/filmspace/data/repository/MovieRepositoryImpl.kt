@@ -53,6 +53,9 @@ class MovieRepositoryImpl @Inject constructor(
         movieDao.deleteFavouriteMovie(id)
     }
 
+    override suspend fun deleteAllSearchedMovies() {
+        movieDao.deleteAllSearchedMovies()
+    }
 
     override fun loadPopularityMovies() = Pager(
         config = PagingConfig(

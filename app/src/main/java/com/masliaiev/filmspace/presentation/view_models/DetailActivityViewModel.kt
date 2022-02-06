@@ -40,5 +40,4 @@ class DetailActivityViewModel @Inject constructor(
         viewModelScope.launch { _trailersList.value = loadTrailersMoviesUseCase.loadTrailers(id) }
     }
 
-
 }

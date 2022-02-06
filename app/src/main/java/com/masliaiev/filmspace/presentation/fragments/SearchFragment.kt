@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -70,30 +71,43 @@ class SearchFragment : Fragment() {
         binding.rvSearchedMovies.layoutManager = GridLayoutManager(requireContext(), COLUMN_COUNT)
         viewModel.searchedMoviesListFromDb.observe(viewLifecycleOwner) {
             adapter.submitList(it)
+            if (it.isEmpty()) {
+                binding.tvClearHistory.visibility = View.INVISIBLE
+            } else {
+                binding.tvClearHistory.visibility = View.VISIBLE
+            }
         }
-        viewModel.searchList?.observe(viewLifecycleOwner){
+        viewModel.searchedMoviesList?.observe(viewLifecycleOwner) {
             adapterPaging.submitData(viewLifecycleOwner.lifecycle, it)
         }
-        binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
+        binding.etSearch.setOnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val query = binding.etSearch.text.toString().trim()
                 if (query.isNotEmpty()) {
-                    viewModel.searchList?.removeObservers(viewLifecycleOwner)
+                    viewModel.searchedMoviesList?.removeObservers(viewLifecycleOwner)
                     viewModel.query = query
                     viewModel.searchMovies(query)
-                    viewModel.searchList?.observe(viewLifecycleOwner) {
+                    viewModel.searchedMoviesList?.observe(viewLifecycleOwner) {
                         adapterPaging.submitData(viewLifecycleOwner.lifecycle, it)
                     }
                     adapterPaging.refresh()
-                    binding.rvSearchedMoviesFromDb.visibility = View.INVISIBLE
+                    binding.moviesFromDb.visibility = View.INVISIBLE
                     binding.rvSearchedMovies.visibility = View.VISIBLE
-                    binding.tvRecentlySearched.visibility = View.INVISIBLE
+
                 } else {
                     Toast.makeText(requireActivity(), "Need text to query", Toast.LENGTH_SHORT)
                         .show()
                 }
+                val inputMethodManager = requireContext()
+                    .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(
+                    v.windowToken,
+                    InputMethodManager.HIDE_NOT_ALWAYS
+                )
+                true
+            } else {
+                false
             }
-            false
         }
         binding.ivDeleteIcon.setOnClickListener {
             binding.etSearch.text.clear()
@@ -103,11 +117,10 @@ class SearchFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s?.length == 0) {
+                if (s?.length == EMPTY_EDIT_TEXT) {
                     binding.ivDeleteIcon.visibility = View.INVISIBLE
-                    binding.rvSearchedMoviesFromDb.visibility = View.VISIBLE
+                    binding.moviesFromDb.visibility = View.VISIBLE
                     binding.rvSearchedMovies.visibility = View.INVISIBLE
-                    binding.tvRecentlySearched.visibility = View.VISIBLE
                 } else {
                     binding.ivDeleteIcon.visibility = View.VISIBLE
                 }
@@ -119,8 +132,6 @@ class SearchFragment : Fragment() {
         adapter.onSearchedMovieFromDbClickListener =
             object : SearchedMovieAdapter.OnSearchedMovieFromDbClickListener {
                 override fun onSearchedMovieClick(movie: Movie) {
-                    Toast.makeText(requireActivity(), "Loading...", Toast.LENGTH_SHORT)
-                        .show()
                     startActivity(DetailActivity.newIntent(requireActivity(), movie))
                 }
             }
@@ -128,19 +139,21 @@ class SearchFragment : Fragment() {
             object : SearchedMoviePagingAdapter.OnSearchedMovieClickListener {
                 override fun onMovieClick(movie: Movie) {
                     viewModel.addSearchedMovieInDb(movie)
-                    Toast.makeText(requireActivity(), "Loading...", Toast.LENGTH_SHORT)
-                        .show()
                     startActivity(DetailActivity.newIntent(requireActivity(), movie))
                 }
             }
+
+        binding.tvClearHistory.setOnClickListener {
+            viewModel.deleteAllSearchedMovies()
+        }
+
     }
 
     override fun onStart() {
         super.onStart()
-        if (binding.etSearch.text.toString() == viewModel.query && binding.etSearch.text.isNotEmpty()) {
+        if (binding.etSearch.text.isNotEmpty()) {
             binding.rvSearchedMovies.visibility = View.VISIBLE
-            binding.rvSearchedMoviesFromDb.visibility = View.INVISIBLE
-            binding.tvRecentlySearched.visibility = View.INVISIBLE
+            binding.moviesFromDb.visibility = View.INVISIBLE
         }
     }
 
@@ -156,6 +169,7 @@ class SearchFragment : Fragment() {
         }
 
         private const val COLUMN_COUNT = 2
+        private const val EMPTY_EDIT_TEXT = 0
 
     }
 }

@@ -46,10 +46,8 @@ class MoviePagerAdapter :
         return super.findRelativeAdapterPositionIn(adapter, viewHolder, localPosition)
     }
 
-
     interface OnMovieClickListener {
         fun onMovieClick(movie: Movie)
     }
-
 
 }

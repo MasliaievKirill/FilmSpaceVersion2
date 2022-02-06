@@ -4,40 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_gray"
     android:layout_margin="4dp"
+    android:background="@drawable/background_gray"
     android:elevation="4dp">
 
     <ImageView
         android:id="@+id/iv_small_poster"
         android:layout_width="match_parent"
-        android:padding="8dp"
         android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:padding="8dp"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@id/tv_movie_titIe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"/>
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tv_movie_titIe"
         android:layout_width="0dp"
         android:layout_height="24dp"
-        android:gravity="center"
-        android:padding="2dp"
-        android:textSize="15sp"
-        android:textColor="@color/white"
-        android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:ellipsize="end"
+        android:gravity="center"
         android:maxLines="1"
-        app:layout_constraintTop_toBottomOf="@id/iv_small_poster"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_small_poster"
+        android:padding="2dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_small_poster"
         tools:text="Title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

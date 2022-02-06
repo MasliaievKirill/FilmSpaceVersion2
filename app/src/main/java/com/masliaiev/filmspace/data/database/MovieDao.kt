@@ -15,8 +15,8 @@ interface MovieDao {
     @Query("SELECT * FROM searched_movies")
     fun getSearchedMovieList(): LiveData<List<SearchedMovieDbModel>>
 
-    @Query("SELECT * FROM searched_movies WHERE id=:id LIMIT 1")
-    fun getSearchedMovie(id: Int): LiveData<SearchedMovieDbModel>
+    @Query("DELETE FROM searched_movies")
+    suspend fun deleteAllSearchedMovies()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addFavouriteMovie(movie: FavouriteMovieDbModel)

@@ -19,5 +19,4 @@ class MainFragmentViewModel @Inject constructor(
     val topRatedMoviesList = loadTopRatedMoviesUseCase.loadTopRatedMovies()
         .cachedIn(viewModelScope)
 
-
 }

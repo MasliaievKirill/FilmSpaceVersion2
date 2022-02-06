@@ -17,6 +17,8 @@ interface MovieRepository {
 
     suspend fun deleteFavouriteMovie(id: Int)
 
+    suspend fun deleteAllSearchedMovies()
+
     fun loadPopularityMovies(): LiveData<PagingData<Movie>>
 
     fun loadTopRatedMovies(): LiveData<PagingData<Movie>>
