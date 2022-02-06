@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.masliaiev.filmspace.R
 import com.masliaiev.filmspace.databinding.FragmentSearchBinding
 import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.presentation.FilmSpaceApp
@@ -63,18 +64,22 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this, viewModelFactory)[SearchFragmentViewModel::class.java]
+        viewModel =
+            ViewModelProvider(this, viewModelFactory)[SearchFragmentViewModel::class.java]
         binding.rvSearchedMoviesFromDb.adapter = adapter
         binding.rvSearchedMovies.adapter = adapterPaging
         binding.rvSearchedMoviesFromDb.layoutManager =
             GridLayoutManager(requireContext(), COLUMN_COUNT)
-        binding.rvSearchedMovies.layoutManager = GridLayoutManager(requireContext(), COLUMN_COUNT)
+        binding.rvSearchedMovies.layoutManager =
+            GridLayoutManager(requireContext(), COLUMN_COUNT)
         viewModel.searchedMoviesListFromDb.observe(viewLifecycleOwner) {
             adapter.submitList(it)
             if (it.isEmpty()) {
                 binding.tvClearHistory.visibility = View.INVISIBLE
+                binding.tvRecentlySearched.visibility = View.INVISIBLE
             } else {
                 binding.tvClearHistory.visibility = View.VISIBLE
+                binding.tvRecentlySearched.visibility = View.VISIBLE
             }
         }
         viewModel.searchedMoviesList?.observe(viewLifecycleOwner) {
@@ -95,8 +100,11 @@ class SearchFragment : Fragment() {
                     binding.rvSearchedMovies.visibility = View.VISIBLE
 
                 } else {
-                    Toast.makeText(requireActivity(), "Need text to query", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(
+                        requireActivity(),
+                        getString(R.string.enter_movie_title_to_search),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 val inputMethodManager = requireContext()
                     .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

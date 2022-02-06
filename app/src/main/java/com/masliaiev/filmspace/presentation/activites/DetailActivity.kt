@@ -38,20 +38,22 @@ class DetailActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelFactory)[DetailActivityViewModel::class.java]
         val movie = parseIntent()
         movie?.let {
-            binding.movieInfo.tvTitle.text = it.title
-            binding.movieInfo.tvOriginalTitle.text = it.originalTitle
-            binding.movieInfo.tvRating.text = it.voteAverage.toString()
-            binding.movieInfo.tvReleaseDate.text = it.releaseDate
-            binding.movieInfo.tvOverview.text = it.overview
+            with(binding.movieInfo) {
+                tvTitle.text = it.title
+                tvOriginalTitle.text = it.originalTitle
+                tvRating.text = it.voteAverage.toString()
+                tvReleaseDate.text = it.releaseDate
+                tvOverview.text = it.overview
+            }
         }
-
         Picasso.get().load(movie?.posterPath).placeholder(R.drawable.placeholder_large)
             .into(binding.ivPoster)
         viewModel.favouriteMoviesList.observe(this) {
             for (favouriteMovie in it) {
                 if (favouriteMovie.id == movie?.id) {
                     inFavourite = true
-                    binding.ivAddRemoveFavourite.setImageResource(R.drawable.favourite_add_star_gold_small)
+                    binding.ivAddRemoveFavourite
+                        .setImageResource(R.drawable.favourite_add_star_gold_small)
                 }
             }
         }
@@ -59,15 +61,24 @@ class DetailActivity : AppCompatActivity() {
             movie?.let {
                 if (!inFavourite) {
                     viewModel.addMovieToFavourite(movie)
-                    Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show()
-                    binding.ivAddRemoveFavourite.setImageResource(R.drawable.favourite_add_star_gold_small)
+                    Toast.makeText(
+                        this,
+                        getText(R.string.added_to_favorites),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    binding.ivAddRemoveFavourite
+                        .setImageResource(R.drawable.favourite_add_star_gold_small)
                 } else {
                     viewModel.deleteMovieFromFavourite(movie.id)
-                    Toast.makeText(this, "Removed", Toast.LENGTH_SHORT).show()
-                    binding.ivAddRemoveFavourite.setImageResource(R.drawable.favourite_add_star_white_small)
+                    Toast.makeText(
+                        this,
+                        getText(R.string.removed_from_favorites),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    binding.ivAddRemoveFavourite
+                        .setImageResource(R.drawable.favourite_add_star_white_small)
                 }
             }
-
         }
         binding.toolbarDetail.setNavigationOnClickListener {
             onBackPressed()
@@ -89,13 +100,10 @@ class DetailActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
-
 
     private fun parseIntent() =
         intent.getBundleExtra(EXTRA_MOVIE_BUNDLE)?.getParcelable<Movie>(EXTRA_MOVIE)
-
 
     companion object {
 

@@ -23,7 +23,6 @@ class MovieRepositoryImpl @Inject constructor(
     private val mapper: MovieMapper
 ) : MovieRepository {
 
-
     override fun getFavouriteMovieList(): LiveData<List<Movie>> {
         return Transformations.map(movieDao.getFavouriteMovieList()) {
             it.map {
@@ -39,7 +38,6 @@ class MovieRepositoryImpl @Inject constructor(
             }
         }
     }
-
 
     override suspend fun addFavouriteMovie(movie: Movie) {
         movieDao.addFavouriteMovie(mapper.mapMovieEntityToFavouriteMovieDbModel(movie))
@@ -59,16 +57,16 @@ class MovieRepositoryImpl @Inject constructor(
 
     override fun loadPopularityMovies() = Pager(
         config = PagingConfig(
-            pageSize = 20,
-            maxSize = 100,
+            pageSize = MAX_NUMBER_OF_ITEMS_LOADED_AT_ONCE,
+            maxSize = MAX_NUMBER_OF_ITEMS,
             enablePlaceholders = false
         ), pagingSourceFactory = { PopularityMoviesPageSource(apiService, getCurrentLanguage()) }
     ).liveData
 
     override fun loadTopRatedMovies() = Pager(
         config = PagingConfig(
-            pageSize = 20,
-            maxSize = 100,
+            pageSize = MAX_NUMBER_OF_ITEMS_LOADED_AT_ONCE,
+            maxSize = MAX_NUMBER_OF_ITEMS,
             enablePlaceholders = false
         ), pagingSourceFactory = { TopRatedMoviesPageSource(apiService, getCurrentLanguage()) }
     ).liveData
@@ -82,16 +80,14 @@ class MovieRepositoryImpl @Inject constructor(
                 }
             }
         } catch (exception: Exception) {
-
         }
         return trailers
-
     }
 
     override fun searchMovies(lang: String, query: String) = Pager(
         config = PagingConfig(
-            pageSize = 20,
-            maxSize = 100,
+            pageSize = MAX_NUMBER_OF_ITEMS_LOADED_AT_ONCE,
+            maxSize = MAX_NUMBER_OF_ITEMS,
             enablePlaceholders = false
         ), pagingSourceFactory = { SearchMoviesPageSource(apiService, lang, query) }
     ).liveData
@@ -99,6 +95,11 @@ class MovieRepositoryImpl @Inject constructor(
 
     private fun getCurrentLanguage(): String {
         return Locale.getDefault().language
+    }
+
+    companion object {
+        private const val MAX_NUMBER_OF_ITEMS_LOADED_AT_ONCE = 20
+        private const val MAX_NUMBER_OF_ITEMS = 100
     }
 
 }

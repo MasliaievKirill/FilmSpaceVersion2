@@ -41,5 +41,4 @@ class SearchedMoviePagingAdapter :
         fun onMovieClick(movie: Movie)
     }
 
-
 }

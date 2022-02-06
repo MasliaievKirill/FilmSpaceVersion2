@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
+        android:contentDescription="@string/content_description_poster_of_a_movie"
         android:padding="8dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@id/tv_movie_titIe"

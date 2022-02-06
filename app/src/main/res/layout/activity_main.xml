@@ -25,13 +25,13 @@
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:background="@color/surface"
+        android:elevation="8dp"
         app:itemIconTint="@drawable/bottom_nav_selector"
         app:itemTextColor="@drawable/bottom_nav_selector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_container"
-        app:menu="@menu/bottom_navigation_menu"
-        android:elevation="8dp"/>
+        app:menu="@menu/bottom_navigation_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

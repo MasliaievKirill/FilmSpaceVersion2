@@ -129,7 +129,8 @@ class MainFragment : Fragment() {
         }
 
         binding.buttonToFavourite.setOnClickListener {
-            findNavController().navigate(MainFragmentDirections.actionMainFragmentToFavouriteFragment())
+            findNavController()
+                .navigate(MainFragmentDirections.actionMainFragmentToFavouriteFragment())
         }
     }
 
@@ -150,6 +151,5 @@ class MainFragment : Fragment() {
     companion object {
         private const val COLUMN_COUNT = 2
     }
-
 
 }

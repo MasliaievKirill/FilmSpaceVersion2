@@ -33,7 +33,6 @@ class SearchedMovieAdapter : ListAdapter<Movie, MovieViewHolder>(MovieDiffCallba
                 onSearchedMovieFromDbClickListener?.onSearchedMovieClick(movie)
             }
         }
-
     }
 
     interface OnSearchedMovieFromDbClickListener {
