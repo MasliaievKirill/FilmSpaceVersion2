@@ -1,10 +1,8 @@
 <resources>
     <string name="app_name">FilmSpace</string>
     <string name="bottom_navigation_home">Home</string>
-    <string name="bottom_navigation_favourite">Favourite</string>
+    <string name="bottom_navigation_favourite">Favourites</string>
     <string name="bottom_navigation_search">Search</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="warning_nothing_in_favourites">Nothing in favourites.</string>
     <string name="title_all_movies">All movies</string>
     <string name="title_rating_movies">Rating movies</string>
@@ -23,11 +21,12 @@
     <string name="release_date">Release date:</string>
     <string name="description">Description:</string>
     <string name="content_description_poster_of_a_movie">Poster of a movie</string>
-    <string name="button_to_add_or_remove_favourite_movie">Button to add or remove favourite movie</string>
+    <string name="button_to_add_or_remove_favourite_movie">Button to add/remove favourite movie</string>
     <string name="official_trailer">Official trailer:</string>
     <string name="button_click_to_see_on_youtube">Click to see on YouTube</string>
     <string name="content_description_youtube_logo">YouTube logo</string>
     <string name="added_to_favorites">Added to favorites</string>
     <string name="removed_from_favorites">Removed from favorites</string>
     <string name="enter_movie_title_to_search">Enter movie title to search</string>
+    <string name="app_logo">App logo</string>
 </resources>

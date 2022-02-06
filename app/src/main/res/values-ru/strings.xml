@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FilmSpace</string>
+    <string name="bottom_navigation_home">Главная</string>
+    <string name="bottom_navigation_favourite">Избранные</string>
+    <string name="bottom_navigation_search">Поиск</string>
+    <string name="warning_nothing_in_favourites">В избранном ничего нет.</string>
+    <string name="title_all_movies">Все фильмы</string>
+    <string name="title_rating_movies">Рейтинговые</string>
+    <string name="warning_something_is_wrong">Что-то не так.\nПерейти в избранное?</string>
+    <string name="content_description_warning_image">Изображение предупреждения</string>
+    <string name="button_to_favourites">В избранные</string>
+    <string name="button_retry">Повторить</string>
+    <string name="hint_edit_text_search">Поиск</string>
+    <string name="recently_searched">Недавно искали:</string>
+    <string name="button_clear_history">Очистить историю</string>
+    <string name="content_description_image_of_search">Изображение поиска</string>
+    <string name="content_description_icon_to_delete">Изображение удаления</string>
+    <string name="title">Название:</string>
+    <string name="original_title">Ориг. название:</string>
+    <string name="rating">Рейтинг:</string>
+    <string name="release_date">Дата выхода:</string>
+    <string name="description">Описание:</string>
+    <string name="content_description_poster_of_a_movie">Постер фильма:</string>
+    <string name="button_to_add_or_remove_favourite_movie">Кнопка добавить/удалить избранный фильм</string>
+    <string name="official_trailer">Официальный трейлер:</string>
+    <string name="button_click_to_see_on_youtube">Нажмите, чтобы открыть в YouTube</string>
+    <string name="content_description_youtube_logo">Логотип YouTube</string>
+    <string name="added_to_favorites">Добавлено в избранные</string>
+    <string name="removed_from_favorites">Удалено из избранных</string>
+    <string name="enter_movie_title_to_search">Введите название фильма для поиска</string>
+    <string name="app_logo">Логотип приложения</string>
+</resources>
