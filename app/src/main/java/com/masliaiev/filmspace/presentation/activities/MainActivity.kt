@@ -3,6 +3,7 @@ package com.masliaiev.filmspace.presentation.activities
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.masliaiev.filmspace.R
 import com.masliaiev.filmspace.databinding.ActivityMainBinding
 
