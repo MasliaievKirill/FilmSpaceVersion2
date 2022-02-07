@@ -43,8 +43,8 @@
 
         <ImageView
             android:id="@+id/tv_app_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:contentDescription="@string/app_logo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideline_top_of_main_fragment"

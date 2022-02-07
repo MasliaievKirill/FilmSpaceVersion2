@@ -1,4 +1,4 @@
-package com.masliaiev.filmspace.presentation.activites
+package com.masliaiev.filmspace.presentation.activities
 
 import android.content.Context
 import android.content.Intent

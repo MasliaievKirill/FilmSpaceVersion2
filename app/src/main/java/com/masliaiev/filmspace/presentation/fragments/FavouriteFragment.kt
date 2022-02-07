@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.masliaiev.filmspace.databinding.FragmentFavouriteBinding
 import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.presentation.FilmSpaceApp
-import com.masliaiev.filmspace.presentation.activites.DetailActivity
+import com.masliaiev.filmspace.presentation.activities.DetailActivity
 import com.masliaiev.filmspace.presentation.adapters.FavouriteMovieAdapter
 import com.masliaiev.filmspace.presentation.view_models.FavouriteFragmentViewModel
 import com.masliaiev.filmspace.presentation.view_models.ViewModelFactory

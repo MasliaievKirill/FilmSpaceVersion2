@@ -17,7 +17,7 @@ import com.masliaiev.filmspace.R
 import com.masliaiev.filmspace.databinding.FragmentSearchBinding
 import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.presentation.FilmSpaceApp
-import com.masliaiev.filmspace.presentation.activites.DetailActivity
+import com.masliaiev.filmspace.presentation.activities.DetailActivity
 import com.masliaiev.filmspace.presentation.adapters.SearchedMovieAdapter
 import com.masliaiev.filmspace.presentation.adapters.SearchedMoviePagingAdapter
 import com.masliaiev.filmspace.presentation.view_models.SearchFragmentViewModel

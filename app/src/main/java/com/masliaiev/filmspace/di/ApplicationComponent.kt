@@ -1,7 +1,7 @@
 package com.masliaiev.filmspace.di
 
 import android.app.Application
-import com.masliaiev.filmspace.presentation.activites.DetailActivity
+import com.masliaiev.filmspace.presentation.activities.DetailActivity
 import com.masliaiev.filmspace.presentation.fragments.FavouriteFragment
 import com.masliaiev.filmspace.presentation.fragments.MainFragment
 import com.masliaiev.filmspace.presentation.fragments.SearchFragment

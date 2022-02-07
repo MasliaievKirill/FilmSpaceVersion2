@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.masliaiev.filmspace.databinding.FragmentMainBinding
 import com.masliaiev.filmspace.domain.entity.Movie
 import com.masliaiev.filmspace.presentation.FilmSpaceApp
-import com.masliaiev.filmspace.presentation.activites.DetailActivity
+import com.masliaiev.filmspace.presentation.activities.DetailActivity
 import com.masliaiev.filmspace.presentation.adapters.MoviePagerAdapter
 import com.masliaiev.filmspace.presentation.adapters.RecyclerViewPagerAdapter
 import com.masliaiev.filmspace.presentation.view_models.MainFragmentViewModel

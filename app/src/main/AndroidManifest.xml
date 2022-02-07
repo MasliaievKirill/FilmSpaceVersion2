@@ -7,17 +7,17 @@
     <application
         android:allowBackup="true"
         android:name=".presentation.FilmSpaceApp"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_app_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_app_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FilmSpace">
         <activity
-            android:name=".presentation.activites.DetailActivity"
+            android:name=".presentation.activities.DetailActivity"
             android:screenOrientation="portrait"
             android:exported="false" />
         <activity
-            android:name=".presentation.activites.MainActivity"
+            android:name=".presentation.activities.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             android:exported="true">
