@@ -86,7 +86,7 @@ class DetailActivity : AppCompatActivity() {
         binding.toolbarDetail.title = movie?.title
         viewModel.loadTrailers(movie?.id!!)
         viewModel.trailersList.observe(this) {
-            if (it.isNotEmpty()) {
+            if (it != null && it.isNotEmpty()) {
                 for (trailer in it) {
                     if (trailer.official != null && trailer.official) {
                         binding.trailerInfo.visibility = View.VISIBLE

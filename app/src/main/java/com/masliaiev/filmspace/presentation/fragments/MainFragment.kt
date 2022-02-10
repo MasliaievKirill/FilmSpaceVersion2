@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -128,10 +127,6 @@ class MainFragment : Fragment() {
             adapterPopularity.refresh()
         }
 
-        binding.buttonToFavourite.setOnClickListener {
-            findNavController()
-                .navigate(MainFragmentDirections.actionMainFragmentToFavouriteFragment())
-        }
     }
 
     override fun onDestroyView() {
@@ -144,7 +139,6 @@ class MainFragment : Fragment() {
         binding.viewPager.isVisible = loadState !is LoadState.Error
         binding.ivWarning.isVisible = loadState is LoadState.Error
         binding.tvWarning.isVisible = loadState is LoadState.Error
-        binding.buttonToFavourite.isVisible = loadState is LoadState.Error
         binding.buttonRetry.isVisible = loadState is LoadState.Error
     }
 

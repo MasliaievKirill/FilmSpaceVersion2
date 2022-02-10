@@ -7,7 +7,7 @@
     <string name="warning_nothing_in_favourites">В избранном ничего нет.</string>
     <string name="title_all_movies">Все фильмы</string>
     <string name="title_rating_movies">Рейтинговые</string>
-    <string name="warning_something_is_wrong">Что-то не так.\nПерейти в избранное?</string>
+    <string name="warning_something_is_wrong">Что-то не так. Перейдите в избранное.</string>
     <string name="content_description_warning_image">Изображение предупреждения</string>
     <string name="button_to_favourites">В избранные</string>
     <string name="button_retry">Повторить</string>

@@ -6,7 +6,7 @@
     <string name="warning_nothing_in_favourites">Nothing in favourites.</string>
     <string name="title_all_movies">All movies</string>
     <string name="title_rating_movies">Rating movies</string>
-    <string name="warning_something_is_wrong">Something is wrong.\nExplore favourites?</string>
+    <string name="warning_something_is_wrong">Something is wrong. Explore favourites.</string>
     <string name="content_description_warning_image">Warning image</string>
     <string name="button_to_favourites">To favourites</string>
     <string name="button_retry">Retry</string>

@@ -9,11 +9,7 @@
         android:id="@+id/main_fragment"
         android:name="com.masliaiev.filmspace.presentation.fragments.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
-        <action
-            android:id="@+id/action_main_fragment_to_favourite_fragment"
-            app:destination="@id/favourite_fragment" />
-    </fragment>
+        tools:layout="@layout/fragment_main" />
     <fragment
         android:id="@+id/favourite_fragment"
         android:name="com.masliaiev.filmspace.presentation.fragments.FavouriteFragment"
