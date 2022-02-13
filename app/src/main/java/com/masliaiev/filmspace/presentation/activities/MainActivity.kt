@@ -6,8 +6,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.masliaiev.filmspace.R
 import com.masliaiev.filmspace.databinding.ActivityMainBinding
+import com.masliaiev.filmspace.presentation.fragments.MainFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainFragment.OnToFavouriteClickListener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -19,5 +20,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.setupWithNavController(navController)
     }
 
-
+    override fun onToFavouriteClick() {
+        binding.bottomNavigation.selectedItemId = R.id.favourite_fragment
+    }
 }

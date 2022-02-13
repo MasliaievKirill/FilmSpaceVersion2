@@ -27,6 +27,8 @@ class MainFragment : Fragment() {
         (requireActivity().application as FilmSpaceApp).component
     }
 
+    private lateinit var onToFavouriteClickListener: OnToFavouriteClickListener
+
     private lateinit var viewModel: MainFragmentViewModel
 
     @Inject
@@ -55,6 +57,9 @@ class MainFragment : Fragment() {
     override fun onAttach(context: Context) {
         component.inject(this)
         super.onAttach(context)
+        if (context is OnToFavouriteClickListener) {
+            onToFavouriteClickListener = context
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -122,6 +127,10 @@ class MainFragment : Fragment() {
             checkLoadStateError(refreshState)
         }
 
+        binding.buttonToFavourite.setOnClickListener {
+            onToFavouriteClickListener.onToFavouriteClick()
+        }
+
         binding.buttonRetry.setOnClickListener {
             adapterTopRated.refresh()
             adapterPopularity.refresh()
@@ -139,7 +148,12 @@ class MainFragment : Fragment() {
         binding.viewPager.isVisible = loadState !is LoadState.Error
         binding.ivWarning.isVisible = loadState is LoadState.Error
         binding.tvWarning.isVisible = loadState is LoadState.Error
+        binding.buttonToFavourite.isVisible = loadState is LoadState.Error
         binding.buttonRetry.isVisible = loadState is LoadState.Error
+    }
+
+    interface OnToFavouriteClickListener {
+        fun onToFavouriteClick()
     }
 
     companion object {

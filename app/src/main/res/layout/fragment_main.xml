@@ -86,7 +86,6 @@
         android:contentDescription="@string/content_description_warning_image"
         android:elevation="4dp"
         android:src="@drawable/astronaut_warning"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,11 +102,22 @@
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/button_retry"
+        app:layout_constraintBottom_toTopOf="@id/button_to_favourite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_warning" />
+
+    <Button
+        android:id="@+id/button_to_favourite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:backgroundTint="@color/surface"
+        android:text="@string/button_to_favourites"
+        app:layout_constraintBottom_toTopOf="@id/button_retry"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_warning" />
 
 
     <Button
@@ -117,10 +127,9 @@
         android:layout_margin="8dp"
         android:backgroundTint="@color/surface"
         android:text="@string/button_retry"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_warning" />
+        app:layout_constraintTop_toBottomOf="@id/button_to_favourite" />
 
     <ProgressBar
         android:id="@+id/progressBar"
